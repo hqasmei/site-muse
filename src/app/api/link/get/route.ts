@@ -4,29 +4,23 @@ import prismadb from "@/lib/prismadb";
 
 import { auth, currentUser } from "@clerk/nextjs";
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   try {
     const body = await req.json();
     const user = await currentUser();
-    // const { name } = body;
+    const { projectId } = body;
 
-    // if (!user || !user.id || !user.firstName) {
-    //   return new NextResponse("Unauthorized", { status: 401 });
-    // }
+    if (!user || !user.id || !user.firstName) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
-    // if (!name) {
-    //   return new NextResponse("Missing required fields", { status: 400 });
-    // }
+    const link = await prismadb.link.findMany({
+      where: {
+        projectId: projectId,
+      },
+    });
 
-    // const project = await prismadb.project.create({
-    //   data: {
-    //     userId: user.id,
-    //     userName: user.firstName,
-    //     name,
-    //   },
-    // });
-
-    return NextResponse.json({ data: "test" });
+    return NextResponse.json(link);
   } catch (error) {
     console.log("[PROJECT_POST]", error);
     return new NextResponse("Internal Error", { status: 500 });

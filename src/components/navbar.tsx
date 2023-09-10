@@ -28,7 +28,10 @@ const Navbar = () => {
       <MaxWidthWrapper>
         <div className="flex h-14 items-center justify-between">
           <div className="flex items-center space-x-4">
-            <Link href="/dashboard" className="font-bold flex flex-row items-center">
+            <Link
+              href="/dashboard"
+              className="font-bold flex flex-row items-center"
+            >
               <Image
                 priority
                 src={siteMuseLogo}
@@ -51,8 +54,8 @@ const Navbar = () => {
               <div className="flex flex-row space-x-2">
                 <div className="hidden items-center space-x-4 sm:flex font-medium text-sm">
                   <Link href="/dashboard">Dashboard</Link>
-                  <Link href="/discover">Discover</Link>
-                  <Link href="/contact">Contact</Link>
+                  {/* <Link href="/discover">Discover</Link> */}
+                  {/* <Link href="/contact">Contact</Link> */}
                   <UserButton afterSignOutUrl="/" />
                 </div>
               </div>

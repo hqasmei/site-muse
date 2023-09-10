@@ -1,8 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import Link from "next/link";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
+import Link from "next/link";
 import { Edit3 } from "lucide-react";
 import Popover from "@/components/popover";
 import { Card } from "@/components/ui/card";
@@ -13,6 +15,14 @@ import { useUpdateProjectModal } from "@/components/modals/update-project-modal"
 import { useDeleteProjectModal } from "@/components/modals/delete-project-modal";
 
 export const ProjectCard = ({ item }: any) => {
+  // Options for formatting the date
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  } as const;
+  const formattedDate = item.createdAt.toLocaleString("en-US", options);
+
   const { setDeleteProjectId, setShowDeleteProjectModal, DeleteProjectModal } =
     useDeleteProjectModal();
 
@@ -25,13 +35,18 @@ export const ProjectCard = ({ item }: any) => {
 
   const [openPopover, setOpenPopover] = useState(false);
 
-  // Options for formatting the date
-  const options = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  } as const;
-  const formattedDate = item.createdAt.toLocaleString("en-US", options);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["getLink"],
+    queryFn: async () => {
+      const { data } = await axios.post("/api/link/get", {
+        projectId: item.id,
+      });
+      return data;
+    },
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error...</div>;
 
   return (
     <>
@@ -52,7 +67,11 @@ export const ProjectCard = ({ item }: any) => {
           <div>
             <div className="flex flex-col space-y-2">
               <p className="font-bold">{item.name}</p>
-              <span className="text-sm">1 bookmark</span>
+              {data.length > 1 ? (
+                <span className="text-sm">{data.length} bookmarks</span>
+              ) : (
+                <span className="text-sm">{data.length} bookmark</span>
+              )}
             </div>
           </div>
           <div className="self-end z-10">

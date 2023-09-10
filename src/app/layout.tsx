@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import TanstackProvider from "@/components/providers/tanstack-provider";
 
 import { Analytics } from "@vercel/analytics/react";
 
@@ -14,8 +15,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning={true}>
         <body>
-          {children}
-          <Analytics />
+          <TanstackProvider>
+            {children}
+            <Analytics />
+          </TanstackProvider>
         </body>
       </html>
     </ClerkProvider>

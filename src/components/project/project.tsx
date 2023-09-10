@@ -1,10 +1,19 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardHeader } from "@/components/ui/card";
+import Popover from "@/components/popover";
+import IconMenu from "@/components/icon-menu";
+import { LinkCard } from "@/components/link/link-card";
+import ThreeDots from "@/components/icons/three-dots";
+import Delete from "@/components/icons/delete";
+import { Edit3 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 import { useCreateLinkModal } from "@/components/modals/create-link-modal";
-import { LinkCard } from "@/components/link/link-card";
+import { useUpdateProjectModal } from "@/components/modals/update-project-modal";
+import { useDeleteProjectModal } from "@/components/modals/delete-project-modal";
 
 type ProjectProps = {
   project: any;
@@ -12,14 +21,27 @@ type ProjectProps = {
 };
 
 export const Project = ({ project, links }: ProjectProps) => {
-  const props = { projectId: project.id };
+  const props = { projectId: project.id, projectName: project.name };
+  const [openPopover, setOpenPopover] = useState(false);
 
   const { setAddProjectId, setShowCreateLinkModal, CreateLinkModal } =
     useCreateLinkModal();
 
+  const { setDeleteProjectId, setShowDeleteProjectModal, DeleteProjectModal } =
+    useDeleteProjectModal();
+
+  const {
+    setUpdateProjectId,
+    setUpdateProjectName,
+    setShowUpdateProjectModal,
+    UpdateProjectModal,
+  } = useUpdateProjectModal();
+
   return (
     <>
       <CreateLinkModal />
+      <UpdateProjectModal />
+      <DeleteProjectModal />
       <div>
         <Link
           href="/dashboard"
@@ -48,21 +70,67 @@ export const Project = ({ project, links }: ProjectProps) => {
             {project?.name}
           </h1>
         </div>
-
-        <button
-          className="active:scale-95 inline-flex items-center justify-center rounded-full text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-10 py-2 px-4"
-          type="button"
-          aria-haspopup="dialog"
-          aria-expanded="false"
-          aria-controls="radix-:rd:"
-          data-state="closed"
-          onClick={() => {
-            setAddProjectId(props.projectId);
-            setShowCreateLinkModal(true);
-          }}
-        >
-          Add Link
-        </button>
+        <div className="flex flex-row space-x-2">
+          <Button
+            onClick={() => {
+              setAddProjectId(props.projectId);
+              setShowCreateLinkModal(true);
+            }}
+          >
+            Add Link
+          </Button>
+          <Popover
+            content={
+              <div className="grid w-full gap-px p-2 sm:w-48">
+                <button
+                  onClick={() => {
+                    setOpenPopover(false);
+                    setUpdateProjectId(props.projectId);
+                    setUpdateProjectName(props.projectName);
+                    setShowUpdateProjectModal(true);
+                  }}
+                  className="group flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-gray-500 transition-all duration-75 hover:bg-gray-100"
+                >
+                  <IconMenu text="Edit" icon={<Edit3 className="h-4 w-4" />} />
+                  <kbd className="hidden rounded bg-gray-100 px-2 py-0.5 text-xs font-light text-gray-500 transition-all duration-75 group-hover:bg-gray-200 sm:inline-block">
+                    E
+                  </kbd>
+                </button>
+                <button
+                  onClick={() => {
+                    setOpenPopover(false);
+                    setDeleteProjectId(props.projectId);
+                    setShowDeleteProjectModal(true);
+                  }}
+                  className="group flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-red-600 transition-all duration-75 hover:bg-red-600 hover:text-white"
+                >
+                  <IconMenu
+                    text="Delete"
+                    icon={<Delete className="h-4 w-4" />}
+                  />
+                  <kbd className="hidden rounded bg-red-100 px-2 py-0.5 text-xs font-light text-red-600 transition-all duration-75 group-hover:bg-red-500 group-hover:text-white sm:inline-block">
+                    X
+                  </kbd>
+                </button>
+              </div>
+            }
+            align="end"
+            openPopover={openPopover}
+            setOpenPopover={setOpenPopover}
+          >
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenPopover(!openPopover);
+              }}
+              className="rounded-md px-1 py-2 transition-all duration-75 hover:bg-gray-100 active:bg-gray-200"
+            >
+              <span className="sr-only">Edit</span>
+              <ThreeDots className="h-7 w-7 text-gray-500" />
+            </button>
+          </Popover>
+        </div>
       </div>
 
       {links.length === 0 ? (

@@ -14,12 +14,12 @@ export const LinkCard = ({ item }: any) => {
     <>
       <DeleteLinkModal />
       <Card className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow transition relative flex flex-col">
-        <div className="h-52 relative">
+        <div className="h-68 relative">
           <Image
             src={item.imageUrl}
             alt=""
-            layout="fill"
-            objectFit="cover"
+            width={400}
+            height={300}
             className="rounded-t-lg"
             style={{ objectPosition: "center top" }}
           />

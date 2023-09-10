@@ -5,7 +5,7 @@ import React from "react";
 import { motion, useCycle } from "framer-motion";
 import Link from "next/link";
 import { ReactNode, useEffect, useRef } from "react";
-import { useAuth } from "@clerk/nextjs"; 
+import { useAuth } from "@clerk/nextjs";
 import { useClerk } from "@clerk/nextjs";
 
 const sidebar = {
@@ -65,7 +65,7 @@ const LandingNavbarMobile = () => {
               </Link>
             </MenuItem>
             <MenuItem className="my-3 h-px w-full bg-gray-300" />
-            <MenuItem key="Discover">
+            {/* <MenuItem key="Discover">
               <Link
                 href="/discover"
                 onClick={() => toggleOpen()}
@@ -84,7 +84,7 @@ const LandingNavbarMobile = () => {
                 Contact
               </Link>
             </MenuItem>
-            <MenuItem className="my-3 h-px w-full bg-gray-300" />
+            <MenuItem className="my-3 h-px w-full bg-gray-300" /> */}
             <MenuItem key="SignOut">
               <Link
                 href="/"

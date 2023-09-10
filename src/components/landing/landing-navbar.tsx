@@ -53,8 +53,8 @@ const LandingNavbar = () => {
               <div className="flex flex-row space-x-2">
                 <div className="hidden items-center space-x-4 sm:flex font-medium text-sm">
                   <Link href="/dashboard">Dashboard</Link>
-                  <Link href="/discover">Discover</Link>
-                  <Link href="/contact">Contact</Link>
+                  {/* <Link href="/discover">Discover</Link> */}
+                  {/* <Link href="/contact">Contact</Link> */}
                   <UserButton afterSignOutUrl="/" />
                 </div>
               </div>

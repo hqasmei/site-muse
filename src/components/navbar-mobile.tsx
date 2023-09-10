@@ -64,7 +64,7 @@ const NavbarMobile = () => {
               </Link>
             </MenuItem>
             <MenuItem className="my-3 h-px w-full bg-gray-300" />
-            <MenuItem key="Discover">
+            {/* <MenuItem key="Discover">
               <Link
                 href="/discover"
                 onClick={() => toggleOpen()}
@@ -83,7 +83,7 @@ const NavbarMobile = () => {
                 Contact
               </Link>
             </MenuItem>
-            <MenuItem className="my-3 h-px w-full bg-gray-300" />
+            <MenuItem className="my-3 h-px w-full bg-gray-300" /> */}
             <MenuItem key="SignOut">
               <Link
                 href="/"
