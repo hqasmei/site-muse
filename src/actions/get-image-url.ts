@@ -1,22 +1,29 @@
 import axios from "axios";
 
 export const getScreenshotUrl = async (linkUrl: string) => {
-  const screenshotOneApiKey = process.env.NEXT_PUBLIC_SCREENSHOT_ONE_API_KEY;
-  const screenshotOneApiEndpoint =
-    process.env.NEXT_PUBLIC_SCREENSHOT_ONE_API_ENDPOINT;
+  const screenlyApiKey = process.env.NEXT_PUBLIC_SCREENLY_API_KEY;
+  const screenlyApiEndpoint = process.env.NEXT_PUBLIC_SCREENLY_API_ENDPOINT;
 
   try {
-    const response = await axios.get(
-      `${screenshotOneApiEndpoint}?url=${linkUrl}&access_key=${screenshotOneApiKey}`
-    );
-
-    if (response.status === 200) {
-      const urlToDownloadFrom = response.config.url;
-      return urlToDownloadFrom;
-    } else {
-      throw new Error(
-        `Screenshot capture failed with status code: ${response.status}`
+    if (screenlyApiEndpoint) {
+      const response = await axios.post(
+        screenlyApiEndpoint,
+        { url: linkUrl },
+        {
+          headers: {
+            Authorization: `Bearer ${screenlyApiKey}`,
+          },
+        }
       );
+
+      if (response.status === 201) {
+        const urlToDownloadFrom = response.data.data.shot_url;
+        return urlToDownloadFrom;
+      } else {
+        throw new Error(
+          `Screenshot capture failed with status code: ${response.status}`
+        );
+      }
     }
   } catch (error) {
     throw new Error(`Screenshot capture failed: ${error}`);

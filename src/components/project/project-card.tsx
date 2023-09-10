@@ -11,6 +11,8 @@ import { Card } from "@/components/ui/card";
 import ThreeDots from "@/components/icons/three-dots";
 import Delete from "@/components/icons/delete";
 import IconMenu from "@/components/icon-menu";
+import { Skeleton } from "@/components/ui/skeleton";
+
 import { useUpdateProjectModal } from "@/components/modals/update-project-modal";
 import { useDeleteProjectModal } from "@/components/modals/delete-project-modal";
 
@@ -36,7 +38,7 @@ export const ProjectCard = ({ item }: any) => {
   const [openPopover, setOpenPopover] = useState(false);
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["getLink"],
+    queryKey: ["getLink", { id: item.id }],
     queryFn: async () => {
       const { data } = await axios.post("/api/link/get", {
         projectId: item.id,
@@ -45,7 +47,26 @@ export const ProjectCard = ({ item }: any) => {
     },
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <Card
+          key={item.id}
+          className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow transition hover:shadow-lg relative"
+        >
+          <div className="h-24 bg-gray-100 rounded-t-lg"></div>
+
+          <div className="flex flex-row justify-between text-muted-foreground p-4">
+            <div>
+              <div className="flex flex-col space-y-2">
+                <Skeleton className="w-[120px] h-[18px] rounded-full bg-gray-300" />
+                <Skeleton className="w-[50px] h-[18px] rounded-full bg-gray-300" />
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+    );
   if (isError) return <div>Error...</div>;
 
   return (
