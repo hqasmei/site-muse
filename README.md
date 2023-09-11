@@ -48,7 +48,7 @@ npm run dev
 - [PlanetScale](https://planetscale.com/) – database
 - [UploadThing](https://uploadthing.com/) – database
 - [Clerk](https://clerk.com/) – auth
-- [Screenly](https://3.screeenly.com/) screenshots 
+- [Screenly](https://3.screeenly.com/) - screenshots 
 - [Vercel](https://vercel.com/) – hosting 
 
 ## Contributing
