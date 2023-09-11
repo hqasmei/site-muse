@@ -1,11 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import prismadb from "@/lib/prismadb";
-
-import { currentUser } from "@clerk/nextjs";
-
-import { getScreenshotUrl } from "@/actions/get-image-url";
-import { getUploadThingUrl } from "@/actions/get-image-url";
+import { getScreenshotUrl, getUploadThingUrl } from '@/actions/get-image-url';
+import prismadb from '@/lib/prismadb';
+import { currentUser } from '@clerk/nextjs';
 
 export async function POST(req: Request) {
   try {
@@ -14,11 +11,11 @@ export async function POST(req: Request) {
     const { linkUrl, projectId } = body;
 
     if (!user || !user.id || !user.firstName) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse('Unauthorized', { status: 401 });
     }
 
     if (!linkUrl) {
-      return new NextResponse("Missing required fields", { status: 400 });
+      return new NextResponse('Missing required fields', { status: 400 });
     }
 
     // Capture screenshot using Screenly
@@ -42,10 +39,10 @@ export async function POST(req: Request) {
         return NextResponse.json(newLink);
       }
     } else {
-      return new NextResponse("Fetch Error", { status: 500 });
+      return new NextResponse('Fetch Error', { status: 500 });
     }
   } catch (error) {
-    console.log("[PROJECT_POST]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    console.log('[PROJECT_POST]', error);
+    return new NextResponse('Internal Error', { status: 500 });
   }
 }

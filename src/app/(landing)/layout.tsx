@@ -1,6 +1,6 @@
-import LandingNavbar from "@/components/landing/landing-navbar";
-import LandingNavbarMobile from "@/components/landing/landing-navbar-mobile";
-import { LandingFooter } from "@/components/landing/landing-footer";
+import { LandingFooter } from '@/components/landing/landing-footer';
+import LandingNavbar from '@/components/landing/landing-navbar';
+import LandingNavbarMobile from '@/components/landing/landing-navbar-mobile';
 
 const LandingLayout = async ({ children }: { children: React.ReactNode }) => {
   return (

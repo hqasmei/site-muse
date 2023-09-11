@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Dispatch,
@@ -6,18 +6,19 @@ import {
   useCallback,
   useMemo,
   useState,
-} from "react";
+} from 'react';
 
-import * as z from "zod";
-import axios from "axios";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { useRouter } from 'next/navigation';
 
-import Modal from "@/components/modal";
-import { Form } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
+import Modal from '@/components/modal';
+import { Button } from '@/components/ui/button';
+import { Form } from '@/components/ui/form';
+import { DeleteLinkModalProps } from '@/lib/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { Loader2 } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 const formSchema = z.object({
   linkId: z.string(),
@@ -26,20 +27,18 @@ const formSchema = z.object({
 function DeleteLinkModalHelper({
   showDeleteLinkModal,
   setShowDeleteLinkModal,
-  deleteLinkId,
-  setDeleteLinkId,
+  props,
 }: {
   showDeleteLinkModal: boolean;
   setShowDeleteLinkModal: Dispatch<SetStateAction<boolean>>;
-  deleteLinkId: string;
-  setDeleteLinkId: (deleteLinkId: string) => void;
+  props?: DeleteLinkModalProps;
 }) {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      linkId: deleteLinkId,
+      linkId: props?.linkId,
     },
   });
 
@@ -47,7 +46,7 @@ function DeleteLinkModalHelper({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post("/api/link/delete", values);
+      await axios.post('/api/link/delete', values);
       router.refresh();
       setShowDeleteLinkModal(false);
     } catch (error) {
@@ -104,33 +103,26 @@ function DeleteLinkModalHelper({
   );
 }
 
-export function useDeleteLinkModal() {
-  const [deleteLinkId, setDeleteLinkId] = useState("");
+export function useDeleteLinkModal({
+  props,
+}: { props?: DeleteLinkModalProps } = {}) {
   const [showDeleteLinkModal, setShowDeleteLinkModal] = useState(false);
 
   const DeleteLinkModal = useCallback(() => {
     return (
       <DeleteLinkModalHelper
-        deleteLinkId={deleteLinkId}
-        setDeleteLinkId={setDeleteLinkId}
         showDeleteLinkModal={showDeleteLinkModal}
         setShowDeleteLinkModal={setShowDeleteLinkModal}
+        props={props}
       />
     );
-  }, [
-    deleteLinkId,
-    setDeleteLinkId,
-    showDeleteLinkModal,
-    setShowDeleteLinkModal,
-  ]);
+  }, [showDeleteLinkModal, setShowDeleteLinkModal]);
 
   return useMemo(
     () => ({
-      deleteLinkId,
-      setDeleteLinkId,
       setShowDeleteLinkModal,
       DeleteLinkModal,
     }),
-    [deleteLinkId, setDeleteLinkId, setShowDeleteLinkModal, DeleteLinkModal]
+    [setShowDeleteLinkModal, DeleteLinkModal],
   );
 }

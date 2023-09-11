@@ -1,10 +1,4 @@
-"use client";
-
-import * as z from "zod";
-import axios from "axios";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+'use client';
 
 import {
   Dispatch,
@@ -12,25 +6,32 @@ import {
   useCallback,
   useMemo,
   useState,
-} from "react";
+} from 'react';
 
+import { useRouter } from 'next/navigation';
+
+import Modal from '@/components/modal';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/components/ui/form";
-import Modal from "@/components/modal";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { CreateLinkModalProps } from '@/lib/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { Loader2 } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 const formSchema = z.object({
   linkUrl: z
     .string()
     .min(1, {
-      message: "Link is required.",
+      message: 'Link is required.',
     })
     .refine(
       (value) => {
@@ -39,8 +40,8 @@ const formSchema = z.object({
         return urlPattern.test(value);
       },
       {
-        message: "Invalid URL format.",
-      }
+        message: 'Invalid URL format.',
+      },
     ),
   projectId: z.string(),
 });
@@ -48,21 +49,19 @@ const formSchema = z.object({
 function CreateLinkModalHelper({
   showCreateLinkModal,
   setShowCreateLinkModal,
-  addProjectId,
-  setAddProjectId,
+  props,
 }: {
   showCreateLinkModal: boolean;
   setShowCreateLinkModal: Dispatch<SetStateAction<boolean>>;
-  addProjectId: string;
-  setAddProjectId: (addProjectId: string) => void;
+  props?: CreateLinkModalProps;
 }) {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      linkUrl: "",
-      projectId: addProjectId,
+      linkUrl: '',
+      projectId: props?.projectId,
     },
   });
 
@@ -70,7 +69,7 @@ function CreateLinkModalHelper({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post("/api/link/create", values);
+      await axios.post('/api/link/create', values);
       router.refresh();
       setShowCreateLinkModal(false);
     } catch (error) {
@@ -140,33 +139,26 @@ function CreateLinkModalHelper({
   );
 }
 
-export function useCreateLinkModal() {
-  const [addProjectId, setAddProjectId] = useState("");
+export function useCreateLinkModal({
+  props,
+}: { props?: CreateLinkModalProps } = {}) {
   const [showCreateLinkModal, setShowCreateLinkModal] = useState(false);
 
   const CreateLinkModal = useCallback(() => {
     return (
       <CreateLinkModalHelper
-        addProjectId={addProjectId}
-        setAddProjectId={setAddProjectId}
         showCreateLinkModal={showCreateLinkModal}
         setShowCreateLinkModal={setShowCreateLinkModal}
+        props={props}
       />
     );
-  }, [
-    addProjectId,
-    setAddProjectId,
-    showCreateLinkModal,
-    setShowCreateLinkModal,
-  ]);
+  }, [showCreateLinkModal, setShowCreateLinkModal]);
 
   return useMemo(
     () => ({
-      addProjectId,
-      setAddProjectId,
       setShowCreateLinkModal,
       CreateLinkModal,
     }),
-    [addProjectId, setAddProjectId, setShowCreateLinkModal, CreateLinkModal]
+    [setShowCreateLinkModal, CreateLinkModal],
   );
 }

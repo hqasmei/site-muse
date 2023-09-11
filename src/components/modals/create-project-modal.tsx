@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Dispatch,
@@ -6,30 +6,29 @@ import {
   useCallback,
   useMemo,
   useState,
-} from "react";
+} from 'react';
 
-import * as z from "zod";
-import axios from "axios";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { useRouter } from 'next/navigation';
 
+import Modal from '@/components/modal';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/components/ui/form";
-
-import Modal from "@/components/modal";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { Loader2 } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 const formSchema = z.object({
   name: z.string().min(1, {
-    message: "Name is required.",
+    message: 'Name is required.',
   }),
 });
 
@@ -45,7 +44,7 @@ function CreateProjectModalHelper({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      name: '',
     },
   });
 
@@ -53,7 +52,7 @@ function CreateProjectModalHelper({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post("/api/project/create", values);
+      await axios.post('/api/project/create', values);
       router.refresh();
       setShowCreateProjectModal(false);
     } catch (error) {
@@ -138,6 +137,6 @@ export function useCreateProjectModal() {
 
   return useMemo(
     () => ({ setShowCreateProjectModal, CreateProjectModal }),
-    [setShowCreateProjectModal, CreateProjectModal]
+    [setShowCreateProjectModal, CreateProjectModal],
   );
 }

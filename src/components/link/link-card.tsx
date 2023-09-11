@@ -1,14 +1,17 @@
-"use client";
-import Link from "next/link";
-import Image from "next/image";
+'use client';
 
-import { Card } from "@/components/ui/card";
-import { useDeleteLinkModal } from "../modals/delete-link-modal";
-import Delete from "../icons/delete";
+import Image from 'next/image';
+import Link from 'next/link';
+
+import { Card } from '@/components/ui/card';
+
+import Delete from '../icons/delete';
+import { useDeleteLinkModal } from '../modals/delete-link-modal';
 
 export const LinkCard = ({ item }: any) => {
-  const { setDeleteLinkId, setShowDeleteLinkModal, DeleteLinkModal } =
-    useDeleteLinkModal();
+  const { setShowDeleteLinkModal, DeleteLinkModal } = useDeleteLinkModal({
+    props: { linkId: item.id },
+  });
 
   return (
     <>
@@ -21,7 +24,7 @@ export const LinkCard = ({ item }: any) => {
             width={400}
             height={300}
             className="rounded-t-lg"
-            style={{ objectPosition: "center top" }}
+            style={{ objectPosition: 'center top' }}
           />
         </div>
 
@@ -33,7 +36,6 @@ export const LinkCard = ({ item }: any) => {
           </div>
           <button
             onClick={() => {
-              setDeleteLinkId(item.id);
               setShowDeleteLinkModal(true);
             }}
           >

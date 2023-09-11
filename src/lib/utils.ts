@@ -1,5 +1,5 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 interface SWRError extends Error {
   status: number;
@@ -11,7 +11,7 @@ export const cn = (...inputs: ClassValue[]) => {
 
 export async function fetcher<JSON = any>(
   input: RequestInfo,
-  init?: RequestInit
+  init?: RequestInit,
 ): Promise<JSON> {
   const res = await fetch(input, init);
 
@@ -24,3 +24,13 @@ export async function fetcher<JSON = any>(
 
   return res.json();
 }
+
+export const options = {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+} as const;
+
+export const dateFormatter = (item: any) => {
+  return item.createdAt.toLocaleString('en-US', options);
+};

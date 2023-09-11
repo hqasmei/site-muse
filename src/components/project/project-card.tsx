@@ -1,46 +1,38 @@
-"use client";
-import { useEffect, useState } from "react";
+'use client';
 
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useState } from 'react';
 
-import Link from "next/link";
-import { Edit3 } from "lucide-react";
-import Popover from "@/components/popover";
-import { Card } from "@/components/ui/card";
-import ThreeDots from "@/components/icons/three-dots";
-import Delete from "@/components/icons/delete";
-import IconMenu from "@/components/icon-menu";
-import { Skeleton } from "@/components/ui/skeleton";
+import Link from 'next/link';
 
-import { useUpdateProjectModal } from "@/components/modals/update-project-modal";
-import { useDeleteProjectModal } from "@/components/modals/delete-project-modal";
+import IconMenu from '@/components/icon-menu';
+import Delete from '@/components/icons/delete';
+import ThreeDots from '@/components/icons/three-dots';
+import { useDeleteProjectModal } from '@/components/modals/delete-project-modal';
+import { useUpdateProjectModal } from '@/components/modals/update-project-modal';
+import Popover from '@/components/popover';
+import { Card } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { Edit3 } from 'lucide-react';
 
 export const ProjectCard = ({ item }: any) => {
-  // Options for formatting the date
-  const options = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  } as const;
-  const formattedDate = item.createdAt.toLocaleString("en-US", options);
+  const { setShowDeleteProjectModal, DeleteProjectModal } =
+    useDeleteProjectModal({
+      props: { projectId: item.id },
+    });
 
-  const { setDeleteProjectId, setShowDeleteProjectModal, DeleteProjectModal } =
-    useDeleteProjectModal();
-
-  const {
-    setUpdateProjectId,
-    setUpdateProjectName,
-    setShowUpdateProjectModal,
-    UpdateProjectModal,
-  } = useUpdateProjectModal();
+  const { setShowUpdateProjectModal, UpdateProjectModal } =
+    useUpdateProjectModal({
+      props: { projectId: item.id, projectName: item.name },
+    });
 
   const [openPopover, setOpenPopover] = useState(false);
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["getLink", { id: item.id }],
+    queryKey: ['getLink', { id: item.id }],
     queryFn: async () => {
-      const { data } = await axios.post("/api/link/get", {
+      const { data } = await axios.post('/api/link/get', {
         projectId: item.id,
       });
       return data;
@@ -102,8 +94,6 @@ export const ProjectCard = ({ item }: any) => {
                   <button
                     onClick={() => {
                       setOpenPopover(false);
-                      setUpdateProjectId(item.id);
-                      setUpdateProjectName(item.name);
                       setShowUpdateProjectModal(true);
                     }}
                     className="group flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-gray-500 transition-all duration-75 hover:bg-gray-100"
@@ -119,7 +109,6 @@ export const ProjectCard = ({ item }: any) => {
                   <button
                     onClick={() => {
                       setOpenPopover(false);
-                      setDeleteProjectId(item.id);
                       setShowDeleteProjectModal(true);
                     }}
                     className="group flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-red-600 transition-all duration-75 hover:bg-red-600 hover:text-white"

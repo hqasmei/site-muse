@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Dispatch,
@@ -6,18 +6,19 @@ import {
   useCallback,
   useMemo,
   useState,
-} from "react";
+} from 'react';
 
-import * as z from "zod";
-import axios from "axios";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
-import Modal from "@/components/modal";
-import { Form } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import Modal from '@/components/modal';
+import { Button } from '@/components/ui/button';
+import { Form } from '@/components/ui/form';
+import { DeleteProjectModalProps } from '@/lib/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { Loader2 } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 const formSchema = z.object({
   projectId: z.string(),
@@ -26,13 +27,11 @@ const formSchema = z.object({
 function DeleteProjectModalHelper({
   showDeleteProjectModal,
   setShowDeleteProjectModal,
-  deleteProjectId,
-  setDeleteProjectId,
+  props,
 }: {
   showDeleteProjectModal: boolean;
   setShowDeleteProjectModal: Dispatch<SetStateAction<boolean>>;
-  deleteProjectId: string;
-  setDeleteProjectId: (deleteProjectId: string) => void;
+  props?: DeleteProjectModalProps;
 }) {
   const router = useRouter();
 
@@ -43,7 +42,7 @@ function DeleteProjectModalHelper({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      projectId: deleteProjectId,
+      projectId: props?.projectId,
     },
   });
 
@@ -51,7 +50,7 @@ function DeleteProjectModalHelper({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post("/api/project/delete", values);
+      await axios.post('/api/project/delete', values);
       router.refresh();
       setShowDeleteProjectModal(false);
     } catch (error) {
@@ -109,38 +108,26 @@ function DeleteProjectModalHelper({
   );
 }
 
-export function useDeleteProjectModal() {
-  const [deleteProjectId, setDeleteProjectId] = useState("");
+export function useDeleteProjectModal({
+  props,
+}: { props?: DeleteProjectModalProps } = {}) {
   const [showDeleteProjectModal, setShowDeleteProjectModal] = useState(false);
 
   const DeleteProjectModal = useCallback(() => {
     return (
       <DeleteProjectModalHelper
-        deleteProjectId={deleteProjectId}
-        setDeleteProjectId={setDeleteProjectId}
         showDeleteProjectModal={showDeleteProjectModal}
         setShowDeleteProjectModal={setShowDeleteProjectModal}
+        props={props}
       />
     );
-  }, [
-    deleteProjectId,
-    setDeleteProjectId,
-    showDeleteProjectModal,
-    setShowDeleteProjectModal,
-  ]);
+  }, [showDeleteProjectModal, setShowDeleteProjectModal]);
 
   return useMemo(
     () => ({
-      deleteProjectId,
-      setDeleteProjectId,
       setShowDeleteProjectModal,
       DeleteProjectModal,
     }),
-    [
-      deleteProjectId,
-      setDeleteProjectId,
-      setShowDeleteProjectModal,
-      DeleteProjectModal,
-    ]
+    [setShowDeleteProjectModal, DeleteProjectModal],
   );
 }

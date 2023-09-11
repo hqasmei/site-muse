@@ -1,8 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import { Project } from "@/components/project/project";
-
-import prismadb from "@/lib/prismadb";
+import { Project } from '@/components/project/project';
+import prismadb from '@/lib/prismadb';
 
 type ProjectPageProps = {
   params: {

@@ -1,12 +1,13 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect } from 'react';
 
-import posthog from "posthog-js";
-import { PostHogProvider } from "posthog-js/react";
+import { usePathname, useSearchParams } from 'next/navigation';
 
-if (typeof window !== "undefined") {
+import posthog from 'posthog-js';
+import { PostHogProvider } from 'posthog-js/react';
+
+if (typeof window !== 'undefined') {
   posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY as string, {
     api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
     capture_pageview: false, // Disable automatic pageview capture, as we capture manually
@@ -23,7 +24,7 @@ export const PostHogPageview = (): JSX.Element => {
       if (searchParams && searchParams.toString()) {
         url = url + `?${searchParams.toString()}`;
       }
-      posthog.capture("$pageview", {
+      posthog.capture('$pageview', {
         $current_url: url,
       });
     }

@@ -1,19 +1,21 @@
-"use client";
-import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { Card, CardHeader } from "@/components/ui/card";
-import Popover from "@/components/popover";
-import IconMenu from "@/components/icon-menu";
-import { LinkCard } from "@/components/link/link-card";
-import ThreeDots from "@/components/icons/three-dots";
-import Delete from "@/components/icons/delete";
-import { Edit3 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+'use client';
 
-import { useCreateLinkModal } from "@/components/modals/create-link-modal";
-import { useUpdateProjectModal } from "@/components/modals/update-project-modal";
-import { useDeleteProjectModal } from "@/components/modals/delete-project-modal";
+import { useState } from 'react';
+
+import Image from 'next/image';
+import Link from 'next/link';
+
+import IconMenu from '@/components/icon-menu';
+import Delete from '@/components/icons/delete';
+import ThreeDots from '@/components/icons/three-dots';
+import { LinkCard } from '@/components/link/link-card';
+import { useCreateLinkModal } from '@/components/modals/create-link-modal';
+import { useDeleteProjectModal } from '@/components/modals/delete-project-modal';
+import { useUpdateProjectModal } from '@/components/modals/update-project-modal';
+import Popover from '@/components/popover';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader } from '@/components/ui/card';
+import { Edit3 } from 'lucide-react';
 
 type ProjectProps = {
   project: any;
@@ -24,18 +26,19 @@ export const Project = ({ project, links }: ProjectProps) => {
   const props = { projectId: project.id, projectName: project.name };
   const [openPopover, setOpenPopover] = useState(false);
 
-  const { setAddProjectId, setShowCreateLinkModal, CreateLinkModal } =
-    useCreateLinkModal();
+  const { setShowCreateLinkModal, CreateLinkModal } = useCreateLinkModal({
+    props: { projectId: props.projectId },
+  });
 
-  const { setDeleteProjectId, setShowDeleteProjectModal, DeleteProjectModal } =
-    useDeleteProjectModal();
+  const { setShowDeleteProjectModal, DeleteProjectModal } =
+    useDeleteProjectModal({
+      props: { projectId: props.projectId },
+    });
 
-  const {
-    setUpdateProjectId,
-    setUpdateProjectName,
-    setShowUpdateProjectModal,
-    UpdateProjectModal,
-  } = useUpdateProjectModal();
+  const { setShowUpdateProjectModal, UpdateProjectModal } =
+    useUpdateProjectModal({
+      props: { projectId: props.projectId, projectName: props.projectName },
+    });
 
   return (
     <>
@@ -73,7 +76,6 @@ export const Project = ({ project, links }: ProjectProps) => {
         <div className="flex flex-row space-x-2">
           <Button
             onClick={() => {
-              setAddProjectId(props.projectId);
               setShowCreateLinkModal(true);
             }}
           >
@@ -85,8 +87,6 @@ export const Project = ({ project, links }: ProjectProps) => {
                 <button
                   onClick={() => {
                     setOpenPopover(false);
-                    setUpdateProjectId(props.projectId);
-                    setUpdateProjectName(props.projectName);
                     setShowUpdateProjectModal(true);
                   }}
                   className="group flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-gray-500 transition-all duration-75 hover:bg-gray-100"
@@ -99,7 +99,6 @@ export const Project = ({ project, links }: ProjectProps) => {
                 <button
                   onClick={() => {
                     setOpenPopover(false);
-                    setDeleteProjectId(props.projectId);
                     setShowDeleteProjectModal(true);
                   }}
                   className="group flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-red-600 transition-all duration-75 hover:bg-red-600 hover:text-white"
@@ -144,13 +143,13 @@ export const Project = ({ project, links }: ProjectProps) => {
         <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3   gap-2 pb-10 mt-8">
           {links.map((link: any) => {
             const options = {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
             } as const;
             const formattedDate = link.createdAt.toLocaleString(
-              "en-US",
-              options
+              'en-US',
+              options,
             );
 
             return <LinkCard key={link.id} item={link} />;

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Empty } from "@/components/ui/empty";
+import { Empty } from '@/components/ui/empty';
 
 const ErrorPage = () => {
   return <Empty label="Something went wrong." />;

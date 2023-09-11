@@ -1,13 +1,14 @@
-import "@/styles/globals.css";
-import type { Metadata } from "next";
-import { ClerkProvider } from "@clerk/nextjs";
-import TanstackProvider from "@/components/providers/tanstack-provider";
+import '@/styles/globals.css';
 
-import { Analytics } from "@vercel/analytics/react";
+import type { Metadata } from 'next';
+
+import TanstackProvider from '@/components/providers/tanstack-provider';
+import { ClerkProvider } from '@clerk/nextjs';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
-  title: "SiteMuse",
-  description: "",
+  title: 'SiteMuse',
+  description: '',
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {

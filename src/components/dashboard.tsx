@@ -1,12 +1,11 @@
-"use client";
-import { useState } from "react";
+'use client';
 
-import { Project } from "@prisma/client";
+import { useState } from 'react';
 
-import { ProjectCard } from "@/components/project/project-card";
-
-import { useCreateProjectModal } from "@/components/modals/create-project-modal";
-import { Button } from "@/components/ui/button";
+import { useCreateProjectModal } from '@/components/modals/create-project-modal';
+import { ProjectCard } from '@/components/project/project-card';
+import { Button } from '@/components/ui/button';
+import { Project } from '@prisma/client';
 
 type DashboardProps = {
   data: Project[];

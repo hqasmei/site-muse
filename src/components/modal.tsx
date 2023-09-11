@@ -1,11 +1,13 @@
-"use client";
+'use client';
 
-import { Dispatch, SetStateAction } from "react";
-import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { Drawer } from "vaul";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import useMediaQuery from "@/hooks/use-media-query";
+import { Dispatch, SetStateAction } from 'react';
+
+import { useRouter } from 'next/navigation';
+
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import useMediaQuery from '@/hooks/use-media-query';
+import { cn } from '@/lib/utils';
+import { Drawer } from 'vaul';
 
 export default function Modal({
   children,
@@ -55,8 +57,8 @@ export default function Modal({
         <Drawer.Portal>
           <Drawer.Content
             className={cn(
-              "fixed bottom-0 left-0 right-0 z-50 mt-24 rounded-t-[10px] border-t border-gray-200 bg-white",
-              className
+              'fixed bottom-0 left-0 right-0 z-50 mt-24 rounded-t-[10px] border-t border-gray-200 bg-white',
+              className,
             )}
           >
             <div className="sticky top-0 z-20 flex w-full items-center justify-center rounded-t-[10px] bg-inherit">

@@ -1,14 +1,15 @@
-import { useState } from "react";
-import tailwindColors from "tailwindcss/colors";
+import { useState } from 'react';
+
+import tailwindColors from 'tailwindcss/colors';
 
 type TailwindColor = keyof typeof tailwindColors;
 
 const generateRandomColor = () => {
   const colorKeys = Object.keys(tailwindColors) as TailwindColor[];
-  console.log("hi");
+
   const randomColorKey =
-    colorKeys[ Math.floor( Math.random() * colorKeys.length ) ];
-  
+    colorKeys[Math.floor(Math.random() * colorKeys.length)];
+
   const colors = tailwindColors[randomColorKey] as any;
   const colorNames = Object.keys(colors);
   const randomColorName =
@@ -17,7 +18,7 @@ const generateRandomColor = () => {
 };
 
 const useRandomGradient = () => {
-  const [gradient, setGradient] = useState<string>("test");
+  const [gradient, setGradient] = useState<string>('test');
 
   const generateRandomGradient = () => {
     const startColor = generateRandomColor();

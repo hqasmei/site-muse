@@ -1,7 +1,6 @@
-import Navbar from "@/components/navbar";
-import NavbarMobile from "@/components/navbar-mobile";
-
-import { currentUser } from "@clerk/nextjs";
+import Navbar from '@/components/navbar';
+import NavbarMobile from '@/components/navbar-mobile';
+import { currentUser } from '@clerk/nextjs';
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await currentUser();

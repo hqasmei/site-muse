@@ -1,26 +1,25 @@
-"use client";
+'use client';
 
-import React from "react";
+import React, { ReactNode, useEffect, useRef } from 'react';
 
-import { motion, useCycle } from "framer-motion";
-import Link from "next/link";
-import { ReactNode, useEffect, useRef } from "react";
-import { useAuth } from "@clerk/nextjs";
-import { useClerk } from "@clerk/nextjs";
+import Link from 'next/link';
+
+import { useAuth, useClerk } from '@clerk/nextjs';
+import { motion, useCycle } from 'framer-motion';
 
 const sidebar = {
   open: (height = 1000) => ({
     clipPath: `circle(${height * 2 + 200}px at 100% 0)`,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 20,
       restDelta: 2,
     },
   }),
   closed: {
-    clipPath: "circle(0px at 100% 0)",
+    clipPath: 'circle(0px at 100% 0)',
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 400,
       damping: 40,
     },
@@ -37,10 +36,10 @@ const NavbarMobile = () => {
   return (
     <motion.nav
       initial={false}
-      animate={isOpen ? "open" : "closed"}
+      animate={isOpen ? 'open' : 'closed'}
       custom={height}
       className={`fixed inset-0 z-50 w-full lg:hidden ${
-        isOpen ? "" : "pointer-events-none"
+        isOpen ? '' : 'pointer-events-none'
       }`}
       ref={containerRef}
     >
@@ -137,8 +136,8 @@ const MenuToggle = ({ toggle }: { toggle: any }) => (
     <svg width="23" height="23" viewBox="0 0 23 23">
       <Path
         variants={{
-          closed: { d: "M 2 2.5 L 20 2.5" },
-          open: { d: "M 3 16.5 L 17 2.5" },
+          closed: { d: 'M 2 2.5 L 20 2.5' },
+          open: { d: 'M 3 16.5 L 17 2.5' },
         }}
       />
       <Path
@@ -151,8 +150,8 @@ const MenuToggle = ({ toggle }: { toggle: any }) => (
       />
       <Path
         variants={{
-          closed: { d: "M 2 16.346 L 20 16.346" },
-          open: { d: "M 3 2.5 L 17 16.346" },
+          closed: { d: 'M 2 16.346 L 20 16.346' },
+          open: { d: 'M 3 2.5 L 17 16.346' },
         }}
       />
     </svg>

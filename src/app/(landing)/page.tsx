@@ -1,4 +1,4 @@
-import { LandingHero } from "@/components/landing/landing-hero";
+import { LandingHero } from '@/components/landing/landing-hero';
 
 const HomePage = () => {
   return <LandingHero />;

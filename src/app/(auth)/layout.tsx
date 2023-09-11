@@ -1,5 +1,5 @@
-import LandingNavbar from "@/components/landing/landing-navbar";
-import LandingNavbarMobile from "@/components/landing/landing-navbar-mobile";
+import LandingNavbar from '@/components/landing/landing-navbar';
+import LandingNavbarMobile from '@/components/landing/landing-navbar-mobile';
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (

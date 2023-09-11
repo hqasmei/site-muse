@@ -1,4 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
+
+import { utapi } from 'uploadthing/server';
 
 export const getScreenshotUrl = async (linkUrl: string) => {
   const screenlyApiKey = process.env.NEXT_PUBLIC_SCREENLY_API_KEY;
@@ -13,7 +15,7 @@ export const getScreenshotUrl = async (linkUrl: string) => {
           headers: {
             Authorization: `Bearer ${screenlyApiKey}`,
           },
-        }
+        },
       );
 
       if (response.status === 201) {
@@ -21,7 +23,7 @@ export const getScreenshotUrl = async (linkUrl: string) => {
         return urlToDownloadFrom;
       } else {
         throw new Error(
-          `Screenshot capture failed with status code: ${response.status}`
+          `Screenshot capture failed with status code: ${response.status}`,
         );
       }
     }
@@ -29,8 +31,6 @@ export const getScreenshotUrl = async (linkUrl: string) => {
     throw new Error(`Screenshot capture failed: ${error}`);
   }
 };
-
-import { utapi } from "uploadthing/server";
 
 export const getUploadThingUrl = async (imageUrl: string) => {
   const myUrl = new URL(imageUrl);

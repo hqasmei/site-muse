@@ -1,16 +1,18 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
-import useScroll from "@/hooks/use-scroll";
-import { useParams, useSelectedLayoutSegment } from "next/navigation";
-import MaxWidthWrapper from "./max-width-wrapper";
-import { NAV_ITEMS, SHOW_BACKGROUND_SEGMENTS } from "@/lib/constants";
-import { useAuth } from "@clerk/nextjs";
-import { UserButton } from "@clerk/nextjs";
-import siteMuseLogo from "../../public/sitemuse.svg";
+import React from 'react';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { useParams, useSelectedLayoutSegment } from 'next/navigation';
+
+import useScroll from '@/hooks/use-scroll';
+import { NAV_ITEMS, SHOW_BACKGROUND_SEGMENTS } from '@/lib/constants';
+import { cn } from '@/lib/utils';
+import { useAuth, UserButton } from '@clerk/nextjs';
+
+import siteMuseLogo from '../../public/sitemuse.svg';
+import MaxWidthWrapper from './max-width-wrapper';
 
 const Navbar = () => {
   const scrolled = useScroll(80);
@@ -20,8 +22,8 @@ const Navbar = () => {
   return (
     <div
       className={cn(`sticky inset-x-0 top-0 z-30 w-full transition-all`, {
-        "border-b border-gray-200 bg-white/75 backdrop-blur-lg": scrolled,
-        "border-b border-gray-200 bg-white":
+        'border-b border-gray-200 bg-white/75 backdrop-blur-lg': scrolled,
+        'border-b border-gray-200 bg-white':
           selectedLayout && !SHOW_BACKGROUND_SEGMENTS.has(selectedLayout),
       })}
     >

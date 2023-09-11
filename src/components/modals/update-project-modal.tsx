@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Dispatch,
@@ -8,14 +8,12 @@ import {
   useEffect,
   useMemo,
   useState,
-} from "react";
+} from 'react';
 
-import * as z from "zod";
-import axios from "axios";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
+import Modal from '@/components/modal';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -24,34 +22,30 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-
-import Modal from "@/components/modal";
-import { Loader2 } from "lucide-react";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { UpdateProjectModalProps } from '@/lib/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { Loader2 } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 const formSchema = z.object({
   projectId: z.string(),
   projectName: z.string().min(1, {
-    message: "Name is required.",
+    message: 'Name is required.',
   }),
 });
 
 function UpdateProjectModalHelper({
   showUpdateProjectModal,
   setShowUpdateProjectModal,
-  updateProjectId,
-  setUpdateProjectId,
-  updateProjectName,
-  setUpdateProjectName,
+  props,
 }: {
   showUpdateProjectModal: boolean;
   setShowUpdateProjectModal: Dispatch<SetStateAction<boolean>>;
-  updateProjectId: string;
-  setUpdateProjectId: (updateProjectId: string) => void;
-  updateProjectName: string;
-  setUpdateProjectName: (updateProjectName: string) => void;
+  props?: UpdateProjectModalProps;
 }) {
   const router = useRouter();
 
@@ -62,8 +56,8 @@ function UpdateProjectModalHelper({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      projectId: updateProjectId,
-      projectName: updateProjectName,
+      projectId: props?.projectId,
+      projectName: props?.projectName,
     },
   });
 
@@ -71,7 +65,7 @@ function UpdateProjectModalHelper({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post("/api/project/update", values);
+      await axios.post('/api/project/update', values);
       router.refresh();
       setShowUpdateProjectModal(false);
     } catch (error) {
@@ -141,47 +135,26 @@ function UpdateProjectModalHelper({
   );
 }
 
-export function useUpdateProjectModal() {
-  const [updateProjectId, setUpdateProjectId] = useState("");
-  const [updateProjectName, setUpdateProjectName] = useState("");
+export function useUpdateProjectModal({
+  props,
+}: { props?: UpdateProjectModalProps } = {}) {
   const [showUpdateProjectModal, setShowUpdateProjectModal] = useState(false);
 
   const UpdateProjectModal = useCallback(() => {
     return (
       <UpdateProjectModalHelper
-        updateProjectId={updateProjectId}
-        setUpdateProjectId={setUpdateProjectId}
-        updateProjectName={updateProjectName}
-        setUpdateProjectName={setUpdateProjectName}
         showUpdateProjectModal={showUpdateProjectModal}
         setShowUpdateProjectModal={setShowUpdateProjectModal}
+        props={props}
       />
     );
-  }, [
-    updateProjectId,
-    setUpdateProjectId,
-    updateProjectName,
-    setUpdateProjectName,
-    showUpdateProjectModal,
-    setShowUpdateProjectModal,
-  ]);
+  }, [showUpdateProjectModal, setShowUpdateProjectModal]);
 
   return useMemo(
     () => ({
-      updateProjectId,
-      setUpdateProjectId,
-      updateProjectName,
-      setUpdateProjectName,
       setShowUpdateProjectModal,
       UpdateProjectModal,
     }),
-    [
-      updateProjectId,
-      setUpdateProjectId,
-      updateProjectName,
-      setUpdateProjectName,
-      setShowUpdateProjectModal,
-      UpdateProjectModal,
-    ]
+    [setShowUpdateProjectModal, UpdateProjectModal],
   );
 }

@@ -1,8 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import prismadb from "@/lib/prismadb";
-
-import { auth, currentUser } from "@clerk/nextjs";
+import prismadb from '@/lib/prismadb';
+import { auth, currentUser } from '@clerk/nextjs';
 
 export async function POST(req: Request) {
   try {
@@ -11,7 +10,7 @@ export async function POST(req: Request) {
     const { projectId } = body;
 
     if (!user || !user.id || !user.firstName) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse('Unauthorized', { status: 401 });
     }
 
     const link = await prismadb.link.findMany({
@@ -22,7 +21,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(link);
   } catch (error) {
-    console.log("[PROJECT_POST]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    console.log('[PROJECT_POST]', error);
+    return new NextResponse('Internal Error', { status: 500 });
   }
 }
