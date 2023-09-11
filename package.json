@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "postinstall": "prisma generate",
+    "docker:build": "docker-compose -f src/docker/docker-compose.yml up --build",
+    "docker:database": "docker-compose -f src/docker/docker-compose.yml up db"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.23.3",
