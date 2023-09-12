@@ -73,5 +73,8 @@
     "@tanstack/eslint-plugin-query": "^4.34.1",
     "prettier": "^3.0.3",
     "prisma": "^5.2.0"
+  },
+  "engines": {
+    "node": ">=18.17"
   }
 }

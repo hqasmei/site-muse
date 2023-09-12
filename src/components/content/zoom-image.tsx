@@ -2,10 +2,9 @@
 
 import { ImageProps } from 'next/image';
 
+import BlurImage from '@/components/blur-image';
 import useMediaQuery from '@/hooks/use-media-query';
 import Zoom from 'react-medium-image-zoom';
-
-import BlurImage from '@/components/blur-image';
 
 import 'react-medium-image-zoom/dist/styles.css';
 
