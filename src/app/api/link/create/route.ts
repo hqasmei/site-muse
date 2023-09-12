@@ -23,16 +23,18 @@ export async function POST(req: Request) {
     if (type === 'desktop') {
       console.log('Entered desktop api');
       const desktopScreenshotUrl = await getScreenshotUrl(linkUrl, type);
+      console.log(desktopScreenshotUrl);
       if (desktopScreenshotUrl) {
+        console.log('Entered uploadthing');
         const uploadThingUrl = await getUploadThingUrl(desktopScreenshotUrl);
+        console.log(uploadThingUrl);
         if (uploadThingUrl.data?.url) {
+          console.log("create upload link");
           const newLink = await prismadb.link.create({
             data: {
               userId: user.id,
               imageDesktopFileKey: uploadThingUrl.data.key,
               imageDesktopUrl: uploadThingUrl.data?.url,
-              imageMobileFileKey: '',
-              imageMobileUrl: '',
               linkUrl: linkUrl,
               projectId: projectId,
             },
@@ -45,83 +47,6 @@ export async function POST(req: Request) {
         }
       } else {
         console.log('Desktop: Failed 2');
-        return new NextResponse('Fetch Error', { status: 500 });
-      }
-    } else if (type === 'mobile') {
-      const mobileScreenshotUrl = await getScreenshotUrl(linkUrl, type);
-      if (mobileScreenshotUrl) {
-        const uploadThingUrl = await getUploadThingUrl(mobileScreenshotUrl);
-        if (uploadThingUrl.data?.url) {
-          const newLink = await prismadb.link.create({
-            data: {
-              userId: user.id,
-              imageDesktopFileKey: '',
-              imageDesktopUrl: '',
-              imageMobileFileKey: uploadThingUrl.data.key,
-              imageMobileUrl: uploadThingUrl.data?.url,
-              linkUrl: linkUrl,
-              projectId: projectId,
-            },
-          });
-          console.log('Mobile: Success');
-          return NextResponse.json(newLink);
-        } else {
-          console.log('Mobile: Failed');
-          return new NextResponse('Fetch Error', { status: 500 });
-        }
-      } else {
-        console.log('Mobile: Failed');
-        return new NextResponse('Fetch Error', { status: 500 });
-      }
-    } else if (type === 'both') {
-      const desktopScreenshotUrl1 = await getScreenshotUrl(linkUrl, 'desktop');
-      const mobileScreenshotUrl1 = await getScreenshotUrl(linkUrl, 'mobile');
-      if (desktopScreenshotUrl1 && mobileScreenshotUrl1) {
-        const uploadThingUrl1 = await getUploadThingUrl(desktopScreenshotUrl1);
-        const uploadThingUrl2 = await getUploadThingUrl(mobileScreenshotUrl1);
-        if (uploadThingUrl1.data?.url && uploadThingUrl2.data?.url) {
-          const newLink = await prismadb.link.create({
-            data: {
-              userId: user.id,
-              imageDesktopFileKey: uploadThingUrl1.data.key,
-              imageDesktopUrl: uploadThingUrl1.data?.url,
-              imageMobileFileKey: uploadThingUrl2.data.key,
-              imageMobileUrl: uploadThingUrl2.data?.url,
-              linkUrl: linkUrl,
-              projectId: projectId,
-            },
-          });
-          console.log('Both: Success');
-          return NextResponse.json(newLink);
-        } else {
-          console.log('Both: Failed');
-          return new NextResponse('Fetch Error', { status: 500 });
-        }
-      } else {
-        console.log('Both: Failed');
-        return new NextResponse('Fetch Error', { status: 500 });
-      }
-    } else {
-      const screenshotUrl = await getScreenshotUrl(linkUrl, type);
-      if (screenshotUrl) {
-        const uploadThingUrl = await getUploadThingUrl(screenshotUrl);
-        if (uploadThingUrl.data?.url) {
-          const newLink = await prismadb.link.create({
-            data: {
-              userId: user.id,
-              imageDesktopFileKey: uploadThingUrl.data.key,
-              imageDesktopUrl: uploadThingUrl.data?.url,
-              imageMobileFileKey: '',
-              imageMobileUrl: '',
-              linkUrl: linkUrl,
-              projectId: projectId,
-            },
-          });
-          return NextResponse.json(newLink);
-        } else {
-          return new NextResponse('Fetch Error', { status: 500 });
-        }
-      } else {
         return new NextResponse('Fetch Error', { status: 500 });
       }
     }
