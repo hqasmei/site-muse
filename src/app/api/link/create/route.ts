@@ -1,8 +1,14 @@
 import { NextResponse } from 'next/server';
 
+
+
 import { getScreenshotUrl, getUploadThingUrl } from '@/actions/get-image-url';
 import prismadb from '@/lib/prismadb';
 import { currentUser } from '@clerk/nextjs';
+
+
+
+
 
 export async function POST(req: Request) {
   try {
@@ -23,6 +29,7 @@ export async function POST(req: Request) {
     switch (type) {
       case 'desktop':
         // Code for "desktop" type
+        console.log('Entered desktop api');
         const desktopScreenshotUrl = await getScreenshotUrl(linkUrl, type);
         if (desktopScreenshotUrl) {
           const uploadThingUrl = await getUploadThingUrl(desktopScreenshotUrl);
@@ -32,6 +39,8 @@ export async function POST(req: Request) {
                 userId: user.id,
                 imageDesktopFileKey: uploadThingUrl.data.key,
                 imageDesktopUrl: uploadThingUrl.data?.url,
+                imageMobileFileKey: '',
+                imageMobileUrl: '',
                 linkUrl: linkUrl,
                 projectId: projectId,
               },
@@ -57,6 +66,8 @@ export async function POST(req: Request) {
             const newLink = await prismadb.link.create({
               data: {
                 userId: user.id,
+                imageDesktopFileKey: '',
+                imageDesktopUrl: '',
                 imageMobileFileKey: uploadThingUrl.data.key,
                 imageMobileUrl: uploadThingUrl.data?.url,
                 linkUrl: linkUrl,
@@ -120,6 +131,8 @@ export async function POST(req: Request) {
                 userId: user.id,
                 imageDesktopFileKey: uploadThingUrl.data.key,
                 imageDesktopUrl: uploadThingUrl.data?.url,
+                imageMobileFileKey: '',
+                imageMobileUrl: '',
                 linkUrl: linkUrl,
                 projectId: projectId,
               },
@@ -132,6 +145,8 @@ export async function POST(req: Request) {
           return new NextResponse('Fetch Error', { status: 500 });
         }
     }
+
+    
   } catch (error) {
     console.log('[PROJECT_POST]', error);
     return new NextResponse('Internal Error', { status: 500 });
