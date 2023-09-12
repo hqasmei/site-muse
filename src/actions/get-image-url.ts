@@ -7,19 +7,19 @@ export const getScreenshotUrl = async (linkUrl: string, type: string) => {
   const screenlyApiEndpoint = process.env.NEXT_PUBLIC_SCREENLY_API_ENDPOINT;
   const mobileWidth = 390;
   const desktopWidth = 1440;
-
+  console.log('get Screenshot');
   if (type == 'desktop') {
     try {
+      console.log('get desktop screenshot');
       if (screenlyApiEndpoint) {
         const response = await axios.post(
           screenlyApiEndpoint,
           {
             url: linkUrl,
             full_page: '1',
-            timeout: 30,
+            timeout: 60,
             window_width: desktopWidth,
             css_media_type: 'screen',
-            delay: '100',
           },
           {
             headers: {
@@ -30,6 +30,7 @@ export const getScreenshotUrl = async (linkUrl: string, type: string) => {
 
         if (response.status === 201) {
           const urlToDownloadFrom = response.data.data.shot_url;
+          console.log('finished desktop screenshot');
           return urlToDownloadFrom;
         } else {
           throw new Error(
@@ -48,10 +49,9 @@ export const getScreenshotUrl = async (linkUrl: string, type: string) => {
           {
             url: linkUrl,
             full_page: '1',
-            timeout: 30,
+            timeout: 60,
             window_width: mobileWidth,
             css_media_type: 'screen',
-            delay: '100',
           },
           {
             headers: {
