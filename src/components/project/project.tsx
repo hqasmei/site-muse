@@ -23,7 +23,11 @@ type ProjectProps = {
 };
 
 export const Project = ({ project, links }: ProjectProps) => {
-  const props = { projectId: project.id, projectName: project.name };
+  const props = {
+    projectId: project.id,
+    projectName: project.name,
+    projectColor: project.color,
+  };
   const [openPopover, setOpenPopover] = useState(false);
 
   const { setShowCreateLinkModal, CreateLinkModal } = useCreateLinkModal({
@@ -37,7 +41,11 @@ export const Project = ({ project, links }: ProjectProps) => {
 
   const { setShowUpdateProjectModal, UpdateProjectModal } =
     useUpdateProjectModal({
-      props: { projectId: props.projectId, projectName: props.projectName },
+      props: {
+        projectId: props.projectId,
+        projectName: props.projectName,
+        projectColor: props.projectColor,
+      },
     });
 
   return (

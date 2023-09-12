@@ -27,7 +27,11 @@ export const ProjectCard = ({ item }: any) => {
 
   const { setShowUpdateProjectModal, UpdateProjectModal } =
     useUpdateProjectModal({
-      props: { projectId: item.id, projectName: item.name },
+      props: {
+        projectId: item.id,
+        projectName: item.name,
+        projectColor: item.color,
+      },
     });
 
   const { data, isLoading, isError } = useQuery({
