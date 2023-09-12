@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { useAuth, useClerk } from '@clerk/nextjs';
 import { motion, useCycle } from 'framer-motion';
 
-
 const sidebar = {
   open: (height = 1000) => ({
     clipPath: `circle(${height * 2 + 200}px at 100% 0)`,
