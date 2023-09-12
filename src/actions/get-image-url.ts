@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 import { utapi } from 'uploadthing/server';
@@ -75,7 +76,9 @@ export const getScreenshotUrl = async (linkUrl: string, type: string) => {
   }
 };
 
-export const getUploadThingUrl = async (imageUrl: string) => {
+export const getUploadThingUrl = async ( imageUrl: string ) =>
+{
+  console.log("upload thing function")
   const myUrl = new URL(imageUrl);
   const result = await utapi.uploadFilesFromUrl(myUrl);
 
