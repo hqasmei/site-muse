@@ -152,7 +152,9 @@ export const Project = ({ project, links }: ProjectProps) => {
               options,
             );
 
-            return <LinkCard key={link.id} item={link} />;
+            return (
+              <LinkCard key={link.id} projectId={props.projectId} item={link} />
+            );
           })}
         </div>
       )}

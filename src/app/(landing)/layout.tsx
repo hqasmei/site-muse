@@ -4,12 +4,12 @@ import LandingNavbarMobile from '@/components/landing/landing-navbar-mobile';
 
 const LandingLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
+     <div className="flex min-h-screen flex-col justify-between">
       <LandingNavbar />
       <LandingNavbarMobile />
-      <main className="h-full overflow-auto">{children}</main>
+      {children}
       <LandingFooter />
-    </>
+    </div >
   );
 };
 

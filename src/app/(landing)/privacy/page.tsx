@@ -1,7 +1,14 @@
-import React from 'react';
+import { Metadata } from 'next';
 
-const PrivacyPage = () => {
-  return <div>Privacy</div>;
-};
+import LegalPage from '@/components/content/legal';
+import { constructMetadata } from '@/lib/utils';
+import { allLegalPosts } from 'contentlayer/generated';
 
-export default PrivacyPage;
+export const metadata: Metadata = constructMetadata({
+  title: 'Privacy Policy – SiteMuse',
+});
+
+export default function Privacy() {
+  const post = allLegalPosts.find((post) => post.slug === 'privacy')!;
+  return <LegalPage post={post} />;
+}

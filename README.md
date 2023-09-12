@@ -36,6 +36,7 @@ Once that's done, you can use the following commands to run the app locally:
 
 ```
 npm install
+npm run build
 npm run dev
 ```
 

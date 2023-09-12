@@ -66,6 +66,7 @@ const LandingNavbar = () => {
                 >
                   Log in
                 </Link>
+
                 <Link
                   href="/sign-up"
                   className="animate-fade-in rounded-full border border-black bg-black px-4 py-1.5 text-sm text-white transition-all hover:bg-white hover:text-black"

@@ -10,7 +10,13 @@ export const getScreenshotUrl = async (linkUrl: string) => {
     if (screenlyApiEndpoint) {
       const response = await axios.post(
         screenlyApiEndpoint,
-        { url: linkUrl },
+        {
+          url: linkUrl,
+          full_page: '1',
+          timeout: 30,
+          window_width: 1440,
+          css_media_type: 'screen',
+        },
         {
           headers: {
             Authorization: `Bearer ${screenlyApiKey}`,
