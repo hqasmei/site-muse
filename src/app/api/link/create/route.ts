@@ -52,7 +52,6 @@ export async function POST(req: Request) {
       if (desktopScreenshotUrl) {
         console.log('Entered uploadThing');
         const uploadThingUrl = await getUploadThingUrl(desktopScreenshotUrl);
-        console.log(uploadThingUrl);
 
         if (uploadThingUrl.data?.url) {
           console.log('Create upload link');
