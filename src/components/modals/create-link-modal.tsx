@@ -20,6 +20,7 @@ import {
   FormLabel,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { CreateLinkModalProps } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
@@ -44,6 +45,7 @@ const formSchema = z.object({
       },
     ),
   projectId: z.string(),
+  type: z.string(),
 });
 
 function CreateLinkModalHelper({
@@ -62,6 +64,7 @@ function CreateLinkModalHelper({
     defaultValues: {
       linkUrl: '',
       projectId: props?.projectId,
+      type: 'desktop',
     },
   });
 
@@ -87,12 +90,12 @@ function CreateLinkModalHelper({
           Add Link
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               name="linkUrl"
               control={form.control}
               render={({ field }) => (
-                <FormItem className="col-span-2 md:col-span-1">
+                <FormItem className="col-span-2 md:col-span-1 pt-2">
                   <FormLabel>Add link</FormLabel>
                   <FormControl>
                     <Input
@@ -100,6 +103,42 @@ function CreateLinkModalHelper({
                       placeholder="http://"
                       {...field}
                     />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              name="type"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem className="col-span-2 md:col-span-1">
+                  <FormLabel>Select Screen</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col space-y-1"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="desktop" />
+                        </FormControl>
+                        <FormLabel className="font-normal">Desktop</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="mobile" />
+                        </FormControl>
+                        <FormLabel className="font-normal">Mobile</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="both" />
+                        </FormControl>
+                        <FormLabel className="font-normal">Both</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
                   </FormControl>
                 </FormItem>
               )}

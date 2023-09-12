@@ -35,14 +35,51 @@ export const Bookmark = ({ link, projectId }: BookmarkProps) => {
       </div>
 
       <div className="pt-20 relative">
-        <Image
-          src={link.imageUrl}
-          alt=""
-          width={900}
-          height={500}
-          quality={100}
-          className="rounded-t-lg border h-full"
-        />
+        {link.imageDesktopUrl != '' && link.imageMobileUrl != '' ? (
+          <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-2">
+            <div className="flex flex-col space-y-2">
+              <p>Desktop Version</p>
+              <Image
+                src={link.imageDesktopUrl}
+                alt=""
+                width={1400}
+                height={500}
+                quality={100}
+                className="rounded-t-lg border h-full"
+              />
+            </div>
+
+            <div className="flex flex-col space-y-2">
+              <p>Mobile Version</p>
+              <Image
+                src={link.imageMobileUrl}
+                alt=""
+                width={390}
+                height={500}
+                quality={100}
+                className="rounded-t-lg border h-full"
+              />
+            </div>
+          </div>
+        ) : link.imageDesktopUrl != '' && link.imageMobileUrl == '' ? (
+          <Image
+            src={link.imageDesktopUrl}
+            alt=""
+            width={1400}
+            height={400}
+            quality={100}
+            className="rounded-t-lg border h-full"
+          />
+        ) : (
+          <Image
+            src={link.imageMobileUrl}
+            alt=""
+            width={390}
+            height={500}
+            quality={100}
+            className="rounded-t-lg border h-full"
+          />
+        )}
       </div>
     </>
   );

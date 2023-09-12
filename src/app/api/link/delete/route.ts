@@ -25,10 +25,13 @@ export async function POST(req: Request) {
     });
 
     if (link) {
-      const deleteUploadThingImage = await deleteUploadThingUrl(
-        link?.imageFileKey,
-      );
+      if (link?.imageDesktopFileKey != '') {
+        await deleteUploadThingUrl(link?.imageDesktopFileKey);
+      }
 
+      if (link?.imageMobileFileKey != '') {
+        await deleteUploadThingUrl(link?.imageMobileFileKey);
+      }
       const deleteLink = await prismadb.link.delete({
         where: {
           id: linkId,
