@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const user = await currentUser();
-    const { projectId, projectName } = body;
+    const { projectId, projectName, projectColor } = body;
 
     if (!user || !user.id || !user.firstName) {
       return new NextResponse('Unauthorized', { status: 401 });
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
     const updateProject = await prismadb.project.update({
       where: { id: projectId },
-      data: { name: projectName },
+      data: { name: projectName, color: projectColor },
     });
 
     return NextResponse.json(updateProject);

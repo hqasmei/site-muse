@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
@@ -17,6 +17,9 @@ import axios from 'axios';
 import { Edit3 } from 'lucide-react';
 
 export const ProjectCard = ({ item }: any) => {
+  const [openPopover, setOpenPopover] = useState(false);
+  const [selected, setSelected] = useState(false);
+
   const { setShowDeleteProjectModal, DeleteProjectModal } =
     useDeleteProjectModal({
       props: { projectId: item.id },
@@ -26,8 +29,6 @@ export const ProjectCard = ({ item }: any) => {
     useUpdateProjectModal({
       props: { projectId: item.id, projectName: item.name },
     });
-
-  const [openPopover, setOpenPopover] = useState(false);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['getLink', { id: item.id }],
@@ -39,6 +40,28 @@ export const ProjectCard = ({ item }: any) => {
     },
   });
 
+  const onKeyDown = (e: any) => {
+    if ((selected || openPopover) && ['e', 'd'].includes(e.key)) {
+      setSelected(false);
+      e.preventDefault();
+      switch (e.key) {
+        case 'e':
+          setShowUpdateProjectModal(true);
+          break;
+        case 'd':
+          setShowDeleteProjectModal(true);
+          break;
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [onKeyDown]);
+
   if (isLoading)
     return (
       <div>
@@ -46,7 +69,7 @@ export const ProjectCard = ({ item }: any) => {
           key={item.id}
           className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow transition hover:shadow-lg relative"
         >
-          <div className="h-24 bg-gray-100 rounded-t-lg"></div>
+          <div className="h-12 bg-gray-100 rounded-t-lg"></div>
 
           <div className="flex flex-row justify-between text-muted-foreground p-4">
             <div>
@@ -59,6 +82,7 @@ export const ProjectCard = ({ item }: any) => {
         </Card>
       </div>
     );
+
   if (isError) return <div>Error...</div>;
 
   return (
@@ -74,7 +98,9 @@ export const ProjectCard = ({ item }: any) => {
           href={`/dashboard/${item.id}`}
           className="absolute left-0 top-0 z-0 h-full w-full"
         ></Link>
-        <div className="h-24 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-t-lg"></div>
+        <div
+          className={`h-12 bg-gradient-to-r ${item.color} rounded-t-lg`}
+        ></div>
 
         <div className="flex flex-row justify-between text-muted-foreground p-4">
           <div>
@@ -118,7 +144,7 @@ export const ProjectCard = ({ item }: any) => {
                       icon={<Delete className="h-4 w-4" />}
                     />
                     <kbd className="hidden rounded bg-red-100 px-2 py-0.5 text-xs font-light text-red-600 transition-all duration-75 group-hover:bg-red-500 group-hover:text-white sm:inline-block">
-                      X
+                      D
                     </kbd>
                   </button>
                 </div>

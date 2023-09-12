@@ -35,7 +35,7 @@ export const Dashboard = ({ data }: DashboardProps) => {
           <div className="mt-8"></div>
         </div>
       ) : (
-        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3   gap-2 pb-10 mt-8">
+        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3   gap-8 pb-10 mt-8">
           {data.map((item) => {
             return <ProjectCard key={item.id} item={item} />;
           })}

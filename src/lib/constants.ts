@@ -29,7 +29,9 @@ export const SHOW_BACKGROUND_SEGMENTS = new Set([
 ]);
 
 export const GRADIENT_COLORS = [
-  'from-violet-500 to-fuchsia-500',
   'from-blue-500 to-indigo-500',
+  'from-violet-500 to-fuchsia-500',
   'from-green-500 to-teal-500',
+  'from-red-500 to-yellow-500',
+  'from-gray-500 to-gray-800',
 ];

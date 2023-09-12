@@ -20,6 +20,16 @@ import {
   FormLabel,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { GRADIENT_COLORS } from '@/lib/constants';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { Loader2 } from 'lucide-react';
@@ -29,6 +39,9 @@ import * as z from 'zod';
 const formSchema = z.object({
   name: z.string().min(1, {
     message: 'Name is required.',
+  }),
+  color: z.string().min(1, {
+    message: 'Color is required.',
   }),
 });
 
@@ -45,6 +58,7 @@ function CreateProjectModalHelper({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
+      color: '',
     },
   });
 
@@ -70,7 +84,69 @@ function CreateProjectModalHelper({
           Create a new Project
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+            <FormField
+              name="color"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem className="col-span-2 md:col-span-1">
+                  <FormLabel>Select Color</FormLabel>
+
+                  <Select disabled={isLoading} onValueChange={field.onChange}>
+                    <FormControl>
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Select a color" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value={`${GRADIENT_COLORS[0]}`}>
+                          <div className="flex flex-row items-center space-x-2">
+                            <span
+                              className={`h-4 w-4 bg-gradient-to-r ${GRADIENT_COLORS[0]} rounded-full`}
+                            ></span>
+                            <span>Blue</span>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value={`${GRADIENT_COLORS[1]}`}>
+                          <div className="flex flex-row items-center space-x-2">
+                            <span
+                              className={`h-4 w-4 bg-gradient-to-r ${GRADIENT_COLORS[1]} rounded-full`}
+                            ></span>
+                            <span>Purple</span>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value={`${GRADIENT_COLORS[2]}`}>
+                          <div className="flex flex-row items-center space-x-2">
+                            <span
+                              className={`h-4 w-4 bg-gradient-to-r ${GRADIENT_COLORS[2]} rounded-full`}
+                            ></span>
+                            <span>Green</span>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value={`${GRADIENT_COLORS[3]}`}>
+                          <div className="flex flex-row items-center space-x-2">
+                            <span
+                              className={`h-4 w-4 bg-gradient-to-r ${GRADIENT_COLORS[3]} rounded-full`}
+                            ></span>
+                            <span>Red</span>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value={`${GRADIENT_COLORS[4]}`}>
+                          <div className="flex flex-row items-center space-x-2">
+                            <span
+                              className={`h-4 w-4 bg-gradient-to-r ${GRADIENT_COLORS[4]} rounded-full`}
+                            ></span>
+                            <span>Gray</span>
+                          </div>
+                        </SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
+
             <FormField
               name="name"
               control={form.control}

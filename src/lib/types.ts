@@ -13,4 +13,5 @@ export type DeleteProjectModalProps = {
 export type UpdateProjectModalProps = {
   projectId: string;
   projectName: string;
+  projectColor: string;
 };
