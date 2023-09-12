@@ -18,6 +18,8 @@ export async function POST(req: Request) {
       return new NextResponse('Missing required fields', { status: 400 });
     }
 
+    console.log('Entered api');
+
     switch (type) {
       case 'desktop':
         // Code for "desktop" type
@@ -34,13 +36,18 @@ export async function POST(req: Request) {
                 projectId: projectId,
               },
             });
+            console.log('Desktop: Sucess');
+
             return NextResponse.json(newLink);
           } else {
+            console.log('Desktop: Failed 1');
             return new NextResponse('Fetch Error', { status: 500 });
           }
+        } else {
+          console.log('Desktop: Failed 2');
+          return new NextResponse('Fetch Error', { status: 500 });
         }
 
-        break;
       case 'mobile':
         // Code for "mobile" type
         const mobileScreenshotUrl = await getScreenshotUrl(linkUrl, type);
@@ -56,12 +63,17 @@ export async function POST(req: Request) {
                 projectId: projectId,
               },
             });
+            console.log('Mobile: Sucess');
             return NextResponse.json(newLink);
           } else {
+            console.log('Mobile: Sucess');
             return new NextResponse('Fetch Error', { status: 500 });
           }
+        } else {
+          console.log('Mobile: Sucess');
+          return new NextResponse('Fetch Error', { status: 500 });
         }
-        break;
+
       case 'both':
         // Code for "both" type
         const desktopScreenshotUrl1 = await getScreenshotUrl(
@@ -86,13 +98,17 @@ export async function POST(req: Request) {
                 projectId: projectId,
               },
             });
+            console.log('Both: Sucess');
             return NextResponse.json(newLink);
           } else {
+            console.log('Both: Sucess');
             return new NextResponse('Fetch Error', { status: 500 });
           }
+        } else {
+          console.log('Both: Sucess');
+          return new NextResponse('Fetch Error', { status: 500 });
         }
 
-        break;
       default:
         // Code to handle other cases, if necessary // Code for "desktop" type
         const screenshotUrl = await getScreenshotUrl(linkUrl, type);
@@ -112,9 +128,9 @@ export async function POST(req: Request) {
           } else {
             return new NextResponse('Fetch Error', { status: 500 });
           }
+        } else {
+          return new NextResponse('Fetch Error', { status: 500 });
         }
-
-        break;
     }
   } catch (error) {
     console.log('[PROJECT_POST]', error);

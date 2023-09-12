@@ -1,12 +1,6 @@
 import axios from 'axios';
 
-
-
 import { utapi } from 'uploadthing/server';
-
-
-
-
 
 export const getScreenshotUrl = async (linkUrl: string, type: string) => {
   const screenlyApiKey = process.env.NEXT_PUBLIC_SCREENLY_API_KEY;
@@ -36,7 +30,7 @@ export const getScreenshotUrl = async (linkUrl: string, type: string) => {
           full_page: '1',
           timeout: 30,
           window_width: windowWidth,
-          css_media_type: 'screen', 
+          css_media_type: 'screen',
           delay: '100',
         },
         {
