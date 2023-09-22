@@ -4,30 +4,6 @@ import { getScreenshotUrl, getUploadThingUrl } from '@/actions/get-image-url';
 import prismadb from '@/lib/prismadb';
 import { currentUser } from '@clerk/nextjs';
 
-// Helper function to handle errors
-function handleError(status: any, message: any) {
-  return new NextResponse(message, { status });
-}
-
-// Helper function to create a link
-async function createLink(
-  userId: string,
-  imageDesktopFileKey: string,
-  imageDesktopUrl: string,
-  linkUrl: string,
-  projectId: string,
-) {
-  return prismadb.link.create({
-    data: {
-      userId,
-      imageDesktopFileKey,
-      imageDesktopUrl,
-      linkUrl,
-      projectId,
-    },
-  });
-}
-
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -35,79 +11,36 @@ export async function POST(req: Request) {
     const { linkUrl, projectId, type } = body;
 
     if (!user || !user.id || !user.firstName) {
-      return handleError(401, 'Unauthorized');
+      return new NextResponse('Unauthorized', { status: 401 });
     }
 
     if (!linkUrl) {
-      return handleError(400, 'Missing required fields');
+      return new NextResponse('Missing required fields', { status: 400 });
     }
 
-    console.log('Entered api');
+    return NextResponse.json({ test: "test" });
+    // if (type === 'desktop') {
+    //   const desktopScreenshotUrl = await getScreenshotUrl(linkUrl, type);
 
-    if (type === 'desktop') {
-      console.log('Entered desktop api');
-      const desktopScreenshotUrl = await getScreenshotUrl(linkUrl, type);
-      console.log(desktopScreenshotUrl);
+    //   if (desktopScreenshotUrl) {
+    //     const uploadThingUrl = await getUploadThingUrl(desktopScreenshotUrl);
 
-      if (desktopScreenshotUrl) {
-        console.log('Entered uploadThing');
-        const uploadThingUrl = await getUploadThingUrl(desktopScreenshotUrl);
-
-        if (uploadThingUrl.data?.url) {
-          console.log('Create upload link');
-          const newLink = await prismadb.link.create({
-            data: {
-              userId: user.id,
-              linkUrl,
-              projectId,
-              imageDesktopFileKey: uploadThingUrl.data.key,
-              imageDesktopUrl: uploadThingUrl.data.url,
-            },
-          });
-          console.log('Desktop: Success');
-          return NextResponse.json(newLink);
-        } else {
-          console.log('Desktop: Failed 1');
-          return handleError(500, 'Fetch Error');
-        }
-      } else {
-        console.log('Desktop: Failed 2');
-        return handleError(500, 'Fetch Error');
-      }
-    } else if (type === 'mobile') {
-      console.log('Entered mobile api');
-      const mobileScreenshotUrl = await getScreenshotUrl(linkUrl, type);
-      console.log(mobileScreenshotUrl);
-
-      if (mobileScreenshotUrl) {
-        console.log('Entered uploadThing');
-        const uploadThingUrl = await getUploadThingUrl(mobileScreenshotUrl);
-
-        if (uploadThingUrl.data?.url) {
-          console.log('Create upload link');
-          const newLink = await prismadb.link.create({
-            data: {
-              userId: user.id,
-              linkUrl,
-              projectId,
-              imageMobileFileKey: uploadThingUrl.data.key,
-              imageMobileUrl: uploadThingUrl.data.url,
-            },
-          });
-
-          console.log('mobile: Success');
-          return NextResponse.json(newLink);
-        } else {
-          console.log('mobile: Failed 1');
-          return handleError(500, 'Fetch Error');
-        }
-      } else {
-        console.log('mobile: Failed 2');
-        return handleError(500, 'Fetch Error');
-      }
-    }
+    //     if (uploadThingUrl.data?.url) {
+    //       const newLink = await prismadb.link.create({
+    //         data: {
+    //           userId: user.id,
+    //           linkUrl,
+    //           projectId,
+    //           imageDesktopFileKey: uploadThingUrl.data.key,
+    //           imageDesktopUrl: uploadThingUrl.data.url,
+    //         },
+    //       });
+    //       return NextResponse.json(newLink);
+    //     }
+    //   }
+    // }
   } catch (error) {
     console.log('[PROJECT_POST]', error);
-    return handleError(500, 'Internal Error');
+    return new NextResponse('Internal Error', { status: 500 });
   }
 }
