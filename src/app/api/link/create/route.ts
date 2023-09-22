@@ -16,11 +16,11 @@ export async function POST(req: Request) {
     const { linkUrl, projectId, type } = body;
 
     if (!user || !user.id || !user.firstName) {
-      return handleError(401, 'Unauthorized');
+      return new NextResponse('Unauthorized', { status: 401 });
     }
 
     if (!linkUrl) {
-      return handleError(400, 'Missing required fields');
+      return new NextResponse('Missing required fields', { status: 400 });
     }
 
     if (type === 'desktop') {
@@ -41,10 +41,10 @@ export async function POST(req: Request) {
           });
           return NextResponse.json(newLink);
         } else {
-          return handleError(500, 'Fetch Error');
+          return new NextResponse('Fetch Error', { status: 500 });
         }
       } else {
-        return handleError(500, 'Fetch Error');
+        return new NextResponse('Fetch Error', { status: 500 });
       }
     } else if (type === 'mobile') {
       const mobileScreenshotUrl = await getScreenshotUrl(linkUrl, type);
@@ -65,10 +65,10 @@ export async function POST(req: Request) {
 
           return NextResponse.json(newLink);
         } else {
-          return handleError(500, 'Fetch Error');
+          return new NextResponse('Fetch Error', { status: 500 });
         }
       } else {
-        return handleError(500, 'Fetch Error');
+        return new NextResponse('Fetch Error', { status: 500 });
       }
     } else if (type === 'both') {
       const desktopScreenshotUrl = await getScreenshotUrl(linkUrl, 'desktop');
