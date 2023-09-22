@@ -3,12 +3,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import Download from '@/components/icons/download';
+import download from 'downloadjs';
+
 type BookmarkProps = {
   link: any;
   projectId: string;
 };
 
 export const Bookmark = ({ link, projectId }: BookmarkProps) => {
+  const handleDownload = (imageURL: string) => {
+    download(imageURL);
+  };
+
   return (
     <>
       <div>
@@ -37,7 +44,7 @@ export const Bookmark = ({ link, projectId }: BookmarkProps) => {
       <div className="pt-20 relative">
         {link.imageDesktopUrl != '' && link.imageMobileUrl != '' ? (
           <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-2">
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col space-y-2 relative">
               <p>Desktop Version</p>
               <Image
                 src={link.imageDesktopUrl}
@@ -47,9 +54,16 @@ export const Bookmark = ({ link, projectId }: BookmarkProps) => {
                 quality={100}
                 className="rounded-t-lg border h-full"
               />
+
+              <button
+                onClick={() => handleDownload(link.imageDesktopUrl)}
+                className="absolute top-8 right-4 bg-zinc-300 hover:bg-zinc-400 duration-150 z-10 h-8 w-8 rounded p-1"
+              >
+                <Download />
+              </button>
             </div>
 
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col space-y-2 relative">
               <p>Mobile Version</p>
               <Image
                 src={link.imageMobileUrl}
@@ -59,6 +73,12 @@ export const Bookmark = ({ link, projectId }: BookmarkProps) => {
                 quality={100}
                 className="rounded-t-lg border h-full"
               />
+              <button
+                onClick={() => handleDownload(link.imageMobileUrl)}
+                className="absolute top-8 right-4 bg-zinc-300 hover:bg-zinc-400 duration-150 z-10 h-8 w-8 rounded p-1"
+              >
+                <Download />
+              </button>
             </div>
           </div>
         ) : link.imageDesktopUrl != '' && link.imageMobileUrl == '' ? (

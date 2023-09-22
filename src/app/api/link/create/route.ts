@@ -42,19 +42,13 @@ export async function POST(req: Request) {
       return handleError(400, 'Missing required fields');
     }
 
-    console.log('Entered api');
-
     if (type === 'desktop') {
-      console.log('Entered desktop api');
       const desktopScreenshotUrl = await getScreenshotUrl(linkUrl, type);
-      console.log(desktopScreenshotUrl);
 
       if (desktopScreenshotUrl) {
-        console.log('Entered uploadThing');
         const uploadThingUrl = await getUploadThingUrl(desktopScreenshotUrl);
 
         if (uploadThingUrl.data?.url) {
-          console.log('Create upload link');
           const newLink = await prismadb.link.create({
             data: {
               userId: user.id,
@@ -64,27 +58,20 @@ export async function POST(req: Request) {
               imageDesktopUrl: uploadThingUrl.data.url,
             },
           });
-          console.log('Desktop: Success');
           return NextResponse.json(newLink);
         } else {
-          console.log('Desktop: Failed 1');
           return handleError(500, 'Fetch Error');
         }
       } else {
-        console.log('Desktop: Failed 2');
         return handleError(500, 'Fetch Error');
       }
     } else if (type === 'mobile') {
-      console.log('Entered mobile api');
       const mobileScreenshotUrl = await getScreenshotUrl(linkUrl, type);
-      console.log(mobileScreenshotUrl);
 
       if (mobileScreenshotUrl) {
-        console.log('Entered uploadThing');
         const uploadThingUrl = await getUploadThingUrl(mobileScreenshotUrl);
 
         if (uploadThingUrl.data?.url) {
-          console.log('Create upload link');
           const newLink = await prismadb.link.create({
             data: {
               userId: user.id,
@@ -95,19 +82,54 @@ export async function POST(req: Request) {
             },
           });
 
-          console.log('mobile: Success');
           return NextResponse.json(newLink);
         } else {
-          console.log('mobile: Failed 1');
           return handleError(500, 'Fetch Error');
         }
       } else {
-        console.log('mobile: Failed 2');
+        return handleError(500, 'Fetch Error');
+      }
+    } else if (type === 'both') {
+      const desktopScreenshotUrl = await getScreenshotUrl(linkUrl, 'desktop');
+      const mobileScreenshotUrl = await getScreenshotUrl(linkUrl, 'mobile');
+
+      if (desktopScreenshotUrl && mobileScreenshotUrl) {
+        const uploadThingDesktopUrl =
+          await getUploadThingUrl(desktopScreenshotUrl);
+        const uploadThingMobileUrl =
+          await getUploadThingUrl(mobileScreenshotUrl);
+
+        if (uploadThingDesktopUrl.data?.url && uploadThingMobileUrl.data?.url) {
+          const newLink = await prismadb.link.create({
+            data: {
+              userId: user.id,
+              linkUrl,
+              projectId,
+              imageDesktopFileKey: uploadThingDesktopUrl.data.key,
+              imageDesktopUrl: uploadThingDesktopUrl.data.url,
+              imageMobileFileKey: uploadThingMobileUrl.data.key,
+              imageMobileUrl: uploadThingMobileUrl.data.url,
+            },
+          });
+
+          return NextResponse.json(newLink);
+        } else {
+          return handleError(500, 'Fetch Error');
+        }
+      } else {
         return handleError(500, 'Fetch Error');
       }
     }
   } catch (error) {
     console.log('[PROJECT_POST]', error);
+    if (isPromise(error)) {
+      const result = await error;
+      console.log('AWAITED ERROR', result);
+    }
     return handleError(500, 'Internal Error');
   }
+}
+
+function isPromise(value: any) {
+  return Boolean(value && typeof value.then === 'function');
 }

@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 import IconMenu from '@/components/icon-menu';
 import Delete from '@/components/icons/delete';
+import Download from '@/components/icons/download';
 import ThreeDots from '@/components/icons/three-dots';
 import { LinkCard } from '@/components/link/link-card';
 import { useCreateLinkModal } from '@/components/modals/create-link-modal';
@@ -15,6 +16,9 @@ import { useUpdateProjectModal } from '@/components/modals/update-project-modal'
 import Popover from '@/components/popover';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader } from '@/components/ui/card';
+import axios from 'axios';
+import download from 'downloadjs';
+import JSZip from 'jszip';
 import { Edit3 } from 'lucide-react';
 
 type ProjectProps = {
@@ -30,6 +34,44 @@ export const Project = ({ project, links }: ProjectProps) => {
   };
   const [openPopover, setOpenPopover] = useState(false);
 
+  const handleDownload = async () => {
+    try {
+      const projectImages = await axios.post('/api/images', {
+        projectId: project.id,
+      });
+      const imageUrls = projectImages.data.flatMap((item: any) =>
+        [item.imageDesktopUrl, item.imageMobileUrl].filter((url) => url !== ''),
+      );
+
+      const zip = new JSZip();
+
+      for (let i = 0; i < imageUrls.length; i++) {
+        const imageUrl = imageUrls[i];
+
+        // Fetch the image data
+        const response = await axios.get(imageUrl, {
+          responseType: 'arraybuffer',
+        });
+
+        // Get the file name from the URL or use a generic name
+        const fileName =
+          imageUrl.substring(imageUrl.lastIndexOf('/') + 1) || `image_${i}.jpg`;
+
+        // Add the image to the zip
+        zip.file(fileName, response.data, { binary: true });
+      }
+
+      // Generate the zip content
+      const content = await zip.generateAsync({ type: 'blob' });
+
+      // Trigger the download using downloadjs
+      download(content, 'images.zip', 'application/zip');
+
+      setOpenPopover(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const { setShowCreateLinkModal, CreateLinkModal } = useCreateLinkModal({
     props: { projectId: props.projectId },
   });
@@ -104,6 +146,20 @@ export const Project = ({ project, links }: ProjectProps) => {
                     E
                   </kbd>
                 </button>
+
+                <button
+                  onClick={handleDownload}
+                  className="group flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-gray-500 transition-all duration-75 hover:bg-gray-100"
+                >
+                  <IconMenu
+                    text="Download"
+                    icon={<Download className="h-4 w-4" />}
+                  />
+                  <kbd className="hidden rounded bg-gray-100 px-2 py-0.5 text-xs font-light text-gray-500 transition-all duration-75 group-hover:bg-gray-200 sm:inline-block">
+                    D
+                  </kbd>
+                </button>
+
                 <button
                   onClick={() => {
                     setOpenPopover(false);

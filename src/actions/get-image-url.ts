@@ -7,7 +7,6 @@ export const getScreenshotUrl = async (linkUrl: string, type: string) => {
   const screenlyApiEndpoint = process.env.NEXT_PUBLIC_SCREENLY_API_ENDPOINT;
   const mobileWidth = 390;
   const desktopWidth = 1440;
-  console.log('get Screenshot');
   if (type == 'desktop') {
     try {
       console.log('get desktop screenshot');
@@ -27,10 +26,8 @@ export const getScreenshotUrl = async (linkUrl: string, type: string) => {
             },
           },
         );
-
         if (response.status === 201) {
           const urlToDownloadFrom = response.data.data.shot_url;
-          console.log('finished desktop screenshot');
           return urlToDownloadFrom;
         } else {
           throw new Error(
@@ -76,9 +73,7 @@ export const getScreenshotUrl = async (linkUrl: string, type: string) => {
 };
 
 export const getUploadThingUrl = async (imageUrl: string) => {
-  console.log('upload thing function');
   const myUrl = new URL(imageUrl);
   const result = await utapi.uploadFilesFromUrl(myUrl);
-  console.log(result);
   return result;
 };

@@ -64,7 +64,7 @@ function CreateLinkModalHelper({
     defaultValues: {
       linkUrl: '',
       projectId: props?.projectId,
-      type: 'desktop',
+      type: 'both',
     },
   });
 
@@ -118,8 +118,14 @@ function CreateLinkModalHelper({
                     <RadioGroup
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      className="flex flex-col space-y-1"
+                      className="flex flex-row space-x-1"
                     >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="both" />
+                        </FormControl>
+                        <FormLabel className="font-normal">Both</FormLabel>
+                      </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
                           <RadioGroupItem value="desktop" />
@@ -132,12 +138,6 @@ function CreateLinkModalHelper({
                         </FormControl>
                         <FormLabel className="font-normal">Mobile</FormLabel>
                       </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="both" />
-                        </FormControl>
-                        <FormLabel className="font-normal">Both</FormLabel>
-                      </FormItem>
                     </RadioGroup>
                   </FormControl>
                 </FormItem>
@@ -145,16 +145,6 @@ function CreateLinkModalHelper({
             />
 
             <div className="w-full flex justify-center space-x-6">
-              <Button
-                size="lg"
-                variant="outline"
-                type="button"
-                disabled={isLoading}
-                className="w-full"
-                onClick={() => setShowCreateLinkModal(false)}
-              >
-                Cancel
-              </Button>
               <Button
                 size="lg"
                 type="submit"
@@ -169,6 +159,16 @@ function CreateLinkModalHelper({
                 ) : (
                   <span>Save</span>
                 )}
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                type="button"
+                disabled={isLoading}
+                className="w-full"
+                onClick={() => setShowCreateLinkModal(false)}
+              >
+                Cancel
               </Button>
             </div>
           </form>
