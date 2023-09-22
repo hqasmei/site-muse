@@ -40,11 +40,7 @@ export async function POST(req: Request) {
             },
           });
           return NextResponse.json(newLink);
-        } else {
-          return new NextResponse('Fetch Error', { status: 500 });
         }
-      } else {
-        return new NextResponse('Fetch Error', { status: 500 });
       }
     } else if (type === 'mobile') {
       const mobileScreenshotUrl = await getScreenshotUrl(linkUrl, type);
@@ -64,11 +60,7 @@ export async function POST(req: Request) {
           });
 
           return NextResponse.json(newLink);
-        } else {
-          return new NextResponse('Fetch Error', { status: 500 });
         }
-      } else {
-        return new NextResponse('Fetch Error', { status: 500 });
       }
     } else if (type === 'both') {
       const desktopScreenshotUrl = await getScreenshotUrl(linkUrl, 'desktop');
@@ -94,11 +86,7 @@ export async function POST(req: Request) {
           });
 
           return NextResponse.json(newLink);
-        } else {
-          return new NextResponse('Fetch Error', { status: 500 });
         }
-      } else {
-        return new NextResponse('Fetch Error', { status: 500 });
       }
     }
   } catch (error) {
