@@ -95,13 +95,13 @@ export async function POST(req: Request) {
 
           return NextResponse.json(newLink);
         } else {
-          return handleError(500, 'Fetch Error');
+          return new NextResponse('Fetch Error', { status: 500 });
         }
       } else {
-        return handleError(500, 'Fetch Error');
+        return new NextResponse('Fetch Error', { status: 500 });
       }
     }
   } catch (error) {
-    return handleError(500, 'Internal Error');
+    return new NextResponse('Internal Error', { status: 500 });
   }
 }
