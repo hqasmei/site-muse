@@ -9,25 +9,6 @@ function handleError(status: any, message: any) {
   return new NextResponse(message, { status });
 }
 
-// Helper function to create a link
-async function createLink(
-  userId: string,
-  imageDesktopFileKey: string,
-  imageDesktopUrl: string,
-  linkUrl: string,
-  projectId: string,
-) {
-  return prismadb.link.create({
-    data: {
-      userId,
-      imageDesktopFileKey,
-      imageDesktopUrl,
-      linkUrl,
-      projectId,
-    },
-  });
-}
-
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -121,15 +102,6 @@ export async function POST(req: Request) {
       }
     }
   } catch (error) {
-    console.log('[PROJECT_POST]', error);
-    if (isPromise(error)) {
-      const result = await error;
-      console.log('AWAITED ERROR', result);
-    }
     return handleError(500, 'Internal Error');
   }
-}
-
-function isPromise(value: any) {
-  return Boolean(value && typeof value.then === 'function');
 }
