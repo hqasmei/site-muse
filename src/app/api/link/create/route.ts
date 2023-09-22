@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const user = await currentUser();
-    const { linkUrl, projectId, type } = body;
+    const { linkUrl, projectId, desktopImageUrl, mobileImageUrl } = body;
 
     if (!user || !user.id || !user.firstName) {
       return new NextResponse('Unauthorized', { status: 401 });
@@ -17,28 +17,40 @@ export async function POST(req: Request) {
     if (!linkUrl) {
       return new NextResponse('Missing required fields', { status: 400 });
     }
+    var newDesktopKey;
+    var newDesktopUrl;
+    var newMobileKey;
+    var newMobileUrl;
+    if (desktopImageUrl !== '') {
+      const uploadThingDesktop = await getUploadThingUrl(desktopImageUrl);
+      newDesktopKey = uploadThingDesktop.data?.key;
+      newDesktopUrl = uploadThingDesktop.data?.url;
+    } else {
+      newDesktopKey = '';
+      newDesktopUrl = '';
+    }
+    if (mobileImageUrl !== '') {
+      const uploadThingMobile = await getUploadThingUrl(mobileImageUrl);
+      newMobileKey = uploadThingMobile.data?.key;
+      newMobileUrl = uploadThingMobile.data?.url;
+    } else {
+      newMobileKey = '';
+      newMobileUrl = '';
+    }
 
-    return NextResponse.json({ test: "test" });
-    // if (type === 'desktop') {
-    //   const desktopScreenshotUrl = await getScreenshotUrl(linkUrl, type);
+    const newLink = await prismadb.link.create({
+      data: {
+        userId: user.id,
+        linkUrl,
+        projectId,
+        imageDesktopFileKey: newDesktopKey,
+        imageDesktopUrl: newDesktopUrl,
+        imageMobileFileKey: newMobileKey,
+        imageMobileUrl: newMobileUrl,
+      },
+    });
 
-    //   if (desktopScreenshotUrl) {
-    //     const uploadThingUrl = await getUploadThingUrl(desktopScreenshotUrl);
-
-    //     if (uploadThingUrl.data?.url) {
-    //       const newLink = await prismadb.link.create({
-    //         data: {
-    //           userId: user.id,
-    //           linkUrl,
-    //           projectId,
-    //           imageDesktopFileKey: uploadThingUrl.data.key,
-    //           imageDesktopUrl: uploadThingUrl.data.url,
-    //         },
-    //       });
-    //       return NextResponse.json(newLink);
-    //     }
-    //   }
-    // }
+    return NextResponse.json(newLink);
   } catch (error) {
     console.log('[PROJECT_POST]', error);
     return new NextResponse('Internal Error', { status: 500 });

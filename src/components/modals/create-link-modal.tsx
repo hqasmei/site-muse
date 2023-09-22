@@ -10,6 +10,7 @@ import {
 
 import { useRouter } from 'next/navigation';
 
+import { getScreenshotUrl } from '@/actions/get-image-url';
 import Modal from '@/components/modal';
 import { Button } from '@/components/ui/button';
 import {
@@ -72,7 +73,42 @@ function CreateLinkModalHelper({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post('/api/link/create', values);
+      var desktopScreenshotUrl = '';
+      var mobileScreenshotUrl = '';
+
+      switch (values.type) {
+        case 'both':
+          desktopScreenshotUrl = await getScreenshotUrl(
+            values.linkUrl,
+            'desktop',
+          );
+          mobileScreenshotUrl = await getScreenshotUrl(
+            values.linkUrl,
+            'mobile',
+          );
+          break;
+        case 'desktop':
+          desktopScreenshotUrl = await getScreenshotUrl(
+            values.linkUrl,
+            'desktop',
+          );
+          break;
+        case 'mobile':
+          mobileScreenshotUrl = await getScreenshotUrl(
+            values.linkUrl,
+            'mobile',
+          );
+          break;
+        default:
+          break;
+      }
+
+      await axios.post('/api/link/create', {
+        linkUrl: values.linkUrl,
+        projectId: values.projectId,
+        desktopImageUrl: desktopScreenshotUrl,
+        mobileImageUrl: mobileScreenshotUrl,
+      });
       router.refresh();
       setShowCreateLinkModal(false);
     } catch (error) {

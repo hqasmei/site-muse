@@ -23,23 +23,24 @@ export async function POST(req: Request) {
         id: linkId,
       },
     });
-    return NextResponse.json({ test: 'test2' });
-    // if (link) {
-    //   if (link?.imageDesktopFileKey != '') {
-    //     await deleteUploadThingUrl(link?.imageDesktopFileKey);
-    //   }
 
-    //   if (link?.imageMobileFileKey != '') {
-    //     await deleteUploadThingUrl(link?.imageMobileFileKey);
-    //   }
-    //   const deleteLink = await prismadb.link.delete({
-    //     where: {
-    //       id: linkId,
-    //     },
-    //   });
+    if (link) {
+      if (link?.imageDesktopFileKey != '') {
+        await deleteUploadThingUrl(link?.imageDesktopFileKey);
+      }
 
-    //   return NextResponse.json(deleteLink);
-    // }
+      if (link?.imageMobileFileKey != '') {
+        await deleteUploadThingUrl(link?.imageMobileFileKey);
+      }
+    }
+
+    const deleteLink = await prismadb.link.delete({
+      where: {
+        id: linkId,
+      },
+    });
+
+    return NextResponse.json(deleteLink);
   } catch (error) {
     console.log('[PROJECT_POST]', error);
     return new NextResponse('Internal Error', { status: 500 });
