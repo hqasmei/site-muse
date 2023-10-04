@@ -34,7 +34,7 @@ export const AllLinks = ({ data }: AllLinksProps) => {
           <div className="mt-8"></div>
         </div>
       ) : (
-        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-8 pb-10 mt-8 px-4">
+        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-8 pb-24 mt-8 px-4">
           {data.map((item) => {
             return <LinkCard key={item.id} item={item} />;
           })}
