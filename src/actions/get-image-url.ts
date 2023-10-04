@@ -19,6 +19,7 @@ export const getScreenshotUrl = async (linkUrl: string, type: string) => {
             timeout: 30,
             window_width: desktopWidth,
             css_media_type: 'screen',
+            delay: '3000',
           },
           {
             headers: {
@@ -49,6 +50,7 @@ export const getScreenshotUrl = async (linkUrl: string, type: string) => {
             timeout: 30,
             window_width: mobileWidth,
             css_media_type: 'screen',
+            delay: '3000',
           },
           {
             headers: {
