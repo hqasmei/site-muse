@@ -99,11 +99,11 @@ export const ProjectCard = ({ item }: any) => {
         className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow transition hover:shadow-lg relative"
       >
         <Link
-          href={`/dashboard/${item.id}`}
+          href={`/projects/${item.id}`}
           className="absolute left-0 top-0 z-0 h-full w-full"
         ></Link>
         <div
-          className={`h-12 bg-gradient-to-r ${item.color} rounded-t-lg`}
+          className={`h-12 bg-gradient-to-r ${item.color}  rounded-t-lg`}
         ></div>
 
         <div className="flex flex-row justify-between text-muted-foreground p-4">

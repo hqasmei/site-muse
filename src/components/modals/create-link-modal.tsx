@@ -64,7 +64,7 @@ function CreateLinkModalHelper({
     resolver: zodResolver(formSchema),
     defaultValues: {
       linkUrl: '',
-      projectId: props?.projectId,
+      projectId: props?.projectId || '',
       type: 'both',
     },
   });

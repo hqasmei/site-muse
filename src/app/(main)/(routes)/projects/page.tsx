@@ -1,18 +1,18 @@
 import React from 'react';
 
-import { AllLinks } from '@/components/all-links';
+import { Projects } from '@/components/projects';
 import prismadb from '@/lib/prismadb';
 import { currentUser } from '@clerk/nextjs';
 
-const DashboardPage = async () => {
+const ProjectsPage = async () => {
   const user = await currentUser();
 
-  const data = await prismadb.link.findMany({
+  const data = await prismadb.project.findMany({
     where: { userId: user?.id },
     orderBy: { createdAt: 'desc' },
   });
 
-  return <AllLinks data={data} />;
+  return <Projects data={data} />;
 };
 
-export default DashboardPage;
+export default ProjectsPage;

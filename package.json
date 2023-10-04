@@ -18,6 +18,7 @@
   "dependencies": {
     "@clerk/nextjs": "^4.23.3",
     "@hookform/resolvers": "^3.3.1",
+    "@iconify/react": "^4.1.1",
     "@prisma/client": "^5.2.0",
     "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-label": "^2.0.2",

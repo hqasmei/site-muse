@@ -13,7 +13,7 @@ export const LinkCard = ({
   projectId,
 }: {
   item: any;
-  projectId: any;
+  projectId?: any;
 }) => {
   const { setShowDeleteLinkModal, DeleteLinkModal } = useDeleteLinkModal({
     props: { linkId: item.id },
@@ -22,15 +22,15 @@ export const LinkCard = ({
   return (
     <>
       <DeleteLinkModal />
-      <Card className="col-span-1 divide-y divide-gray-200 roundedLg bgWhite shadow transition relative flex flex-col">
-        <div className="h-68 relative">
+      <Card className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow transition relative flex flex-col">
+        <div className="h-68 relative items-center justify-center flex">
           {item.imageDesktopUrl != '' ? (
             <Image
               src={item.imageDesktopUrl}
               alt=""
               width={400}
               height={300}
-              className="rounded-tLg h-[300px]"
+              className="rounded-t-lg   h-[300px]"
               style={{ objectPosition: 'center top', objectFit: 'cover' }}
             />
           ) : (
@@ -39,7 +39,7 @@ export const LinkCard = ({
               alt=""
               width={400}
               height={300}
-              className="rounded-tLg h-[300px]"
+              className="rounded-t-lg  h-[300px]"
               style={{ objectPosition: 'center top', objectFit: 'cover' }}
             />
           )}
@@ -69,22 +69,41 @@ export const LinkCard = ({
               />
             </svg>
           </Link>
-          <Link href={`/dashboard/${projectId}/${item.id}`}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-6 h-6  text-gray-400 hover:text-gray-600 hover:translate-x-1 duration-75"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-              />
-            </svg>
-          </Link>
+          {projectId ? (
+            <Link href={`/dashboard/${projectId}/${item.id}`}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6  text-gray-400 hover:text-gray-600 hover:translate-x-1 duration-75"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                />
+              </svg>
+            </Link>
+          ) : (
+            <Link href={`/dashboard/link/${item.id}`}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6  text-gray-400 hover:text-gray-600 hover:translate-x-1 duration-75"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                />
+              </svg>
+            </Link>
+          )}
         </div>
       </Card>
     </>

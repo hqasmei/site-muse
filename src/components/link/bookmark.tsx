@@ -6,9 +6,11 @@ import Link from 'next/link';
 import Download from '@/components/icons/download';
 import download from 'downloadjs';
 
+import ArrowLeft from '../icons/arrow-left';
+
 type BookmarkProps = {
   link: any;
-  projectId: string;
+  projectId?: string;
 };
 
 export const Bookmark = ({ link, projectId }: BookmarkProps) => {
@@ -17,31 +19,16 @@ export const Bookmark = ({ link, projectId }: BookmarkProps) => {
   };
 
   return (
-    <>
-      <div>
-        <Link
-          href={`/dashboard/${projectId}`}
-          className="flex flex-row space-x-1 items-center group"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mr-1.5 h-4 w-4 group-hover:text-slate-500"
-          >
-            <path d="m15 18-6-6 6-6"></path>
-          </svg>
-          <p className="group-hover:text-slate-500">Back</p>
-        </Link>
-      </div>
+    <div className="flex flex-col px-4 mt-10 space-y-6">
+      <Link
+        href={`${projectId ? `/dashboard/${projectId}` : `/dashboard`}`}
+        className="flex flex-row space-x-0.5 items-center group"
+      >
+        <ArrowLeft className="group-hover:-translate-x-0.5 duration-100" />
+        <span>Back</span>
+      </Link>
 
-      <div className="pt-20 relative">
+      <div className="relative">
         {link.imageDesktopUrl != '' && link.imageMobileUrl != '' ? (
           <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-2">
             <div className="flex flex-col space-y-2 relative">
@@ -101,6 +88,6 @@ export const Bookmark = ({ link, projectId }: BookmarkProps) => {
           />
         )}
       </div>
-    </>
+    </div>
   );
 };

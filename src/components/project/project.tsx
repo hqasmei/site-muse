@@ -15,11 +15,12 @@ import { useDeleteProjectModal } from '@/components/modals/delete-project-modal'
 import { useUpdateProjectModal } from '@/components/modals/update-project-modal';
 import Popover from '@/components/popover';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader } from '@/components/ui/card';
 import axios from 'axios';
 import download from 'downloadjs';
 import JSZip from 'jszip';
 import { Edit3 } from 'lucide-react';
+
+import ArrowLeft from '../icons/arrow-left';
 
 type ProjectProps = {
   project: any;
@@ -91,40 +92,28 @@ export const Project = ({ project, links }: ProjectProps) => {
     });
 
   return (
-    <>
+    <div className="flex flex-col  mt-10 space-y-6">
       <CreateLinkModal />
       <UpdateProjectModal />
       <DeleteProjectModal />
-      <div>
-        <Link
-          href="/dashboard"
-          className="flex flex-row space-x-1 items-center group"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mr-1.5 h-4 w-4 group-hover:text-slate-500"
-          >
-            <path d="m15 18-6-6 6-6"></path>
-          </svg>
-          <p className="group-hover:text-slate-500">Back</p>
-        </Link>
-      </div>
-      <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b border-gray-200 pb-5 sm:flex-row sm:items-center sm:gap-0">
-        <div className="flex flex-row space-x-2 items-center">
-          <h1 className="mb-3 font-heading text-5xl font-semibold text-gray-900 lg:text-6xl">
+
+      <Link
+        href="/projects"
+        className="flex flex-row space-x-0.5 items-center group px-4"
+      >
+        <ArrowLeft className="group-hover:-translate-x-0.5 duration-100" />
+        <span>Back</span>
+      </Link>
+
+      <div className="mt-8 justify-between flex border-b border-gray-200 pb-5  flex-row  items-center  gap-0 px-4">
+        <div className="flex flex-row space-x-2 items-center  ">
+          <h1 className="mb-3 font-heading text-2xl font-semibold text-gray-900 lg:text-4xl">
             {project?.name}
           </h1>
         </div>
-        <div className="flex flex-row space-x-2">
+        <div className="flex flex-row space-x-2 items-center">
           <Button
+            size="sm"
             onClick={() => {
               setShowCreateLinkModal(true);
             }}
@@ -204,7 +193,7 @@ export const Project = ({ project, links }: ProjectProps) => {
           <div className="mt-8"></div>
         </div>
       ) : (
-        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3   gap-2 pb-10 mt-8">
+        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 px-4  gap-8 pb-10 mt-8">
           {links.map((link: any) => {
             const options = {
               year: 'numeric',
@@ -222,6 +211,6 @@ export const Project = ({ project, links }: ProjectProps) => {
           })}
         </div>
       )}
-    </>
+    </div>
   );
 };
