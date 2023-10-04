@@ -83,7 +83,7 @@ export const LandingFooter = () => {
                   <li>
                     <Link
                       className="text-sm text-gray-500 hover:text-gray-900"
-                      href="/dashboard"
+                      href="/bookmarks"
                     >
                       Dashboard
                     </Link>

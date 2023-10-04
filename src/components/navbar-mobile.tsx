@@ -55,7 +55,7 @@ const NavbarMobile = () => {
           <>
             <MenuItem key="Dashboard">
               <Link
-                href="/dashboard"
+                href="/bookmarks"
                 onClick={() => toggleOpen()}
                 className="flex w-full font-semibold capitalize"
               >

@@ -18,7 +18,7 @@ const SideNav = () => {
       <div className="w-full flex-1 pt-6">
         <div className="border-b pb-4">
           <Link
-            href="/dashboard"
+            href="/bookmarks"
             className="font-bold flex flex-row items-center px-4"
           >
             <Image
@@ -42,7 +42,7 @@ const SideNav = () => {
 
         <div className="flex flex-col  space-y-2 px-3  md:space-y-1 md:px-2 pt-4 items-center md:items-start">
           <Link
-            href="/dashboard"
+            href="/bookmarks"
             className={`flex flex-row space-x-2 justify-center items-center md:justify-start relative px-2 rounded py-2 hover:bg-zinc-200  w-full ${
               isBookmarksActive ? 'bg-zinc-200' : ''
             }`}

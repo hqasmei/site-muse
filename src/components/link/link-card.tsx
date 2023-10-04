@@ -87,7 +87,7 @@ export const LinkCard = ({
               </svg>
             </Link>
           ) : (
-            <Link href={`/dashboard/link/${item.id}`}>
+            <Link href={`/bookmarks/link/${item.id}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

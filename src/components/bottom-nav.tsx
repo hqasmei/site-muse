@@ -17,7 +17,7 @@ const BottomNav = () => {
     >
       <div className="flex flex-row items-center justify-start bg-transparent w-full">
         <Link
-          href="/dashboard"
+          href="/bookmarks"
           className={`flex flex-col space-y-1 justify-center items-center w-full py-2 ${
             isBookmarksActive ? ' bg-zinc-200' : ''
           }`}

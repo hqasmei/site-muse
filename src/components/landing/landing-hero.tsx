@@ -31,7 +31,7 @@ export const LandingHero = () => {
         </p>
         <div className="mt-2 flex items-center gap-6">
           <Link
-            href={isSignedIn ? '/dashboard' : '/sign-up'}
+            href={isSignedIn ? '/bookmarks' : '/sign-up'}
             className="active:scale-95 inline-flex items-center justify-center rounded-full text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-11 px-8 mt-5"
           >
             Get started
