@@ -10,7 +10,7 @@ import { useAuth, UserButton, useUser } from '@clerk/nextjs';
 import { Icon } from '@iconify/react';
 
 const SideNav = () => {
-  const { isAllLinksActive, isProjectsActive } = useNavigation();
+  const { isBookmarksActive, isProjectsActive } = useNavigation();
   const { isSignedIn, user, isLoaded } = useUser();
 
   return (
@@ -43,20 +43,42 @@ const SideNav = () => {
         <div className="flex flex-col  space-y-2 px-3  md:space-y-1 md:px-2 pt-4 items-center md:items-start">
           <Link
             href="/dashboard"
-            className={`flex flex-row space-x-2 justify-center items-center md:justify-start relative px-2 rounded py-2  hover:font-semibold  w-full ${
-              isAllLinksActive ? 'bg-zinc-200 font-semibold' : ''
+            className={`flex flex-row space-x-2 justify-center items-center md:justify-start relative px-2 rounded py-2 hover:bg-zinc-200  w-full ${
+              isBookmarksActive ? 'bg-zinc-200' : ''
             }`}
           >
-            <Icon icon="zondicons:link" width="20" height="20" />
-            <span className="hidden md:flex">All Links</span>
+            {isBookmarksActive ? (
+              <Icon icon="material-symbols:bookmark" width="20" height="20" />
+            ) : (
+              <Icon
+                icon="material-symbols:bookmark-outline"
+                width="20"
+                height="20"
+              />
+            )}
+
+            <span className="hidden md:flex">Bookmarks</span>
           </Link>
           <Link
             href="/projects"
-            className={`flex flex-row space-x-2 items-center justify-center md:justify-start  relative px-2 rounded py-2  hover:font-semibold  w-full ${
-              isProjectsActive ? 'bg-zinc-200 font-semibold' : ''
+            className={`flex flex-row space-x-2 items-center justify-center md:justify-start  relative px-2 rounded py-2 hover:bg-zinc-200  w-full ${
+              isProjectsActive ? 'bg-zinc-200' : ''
             }`}
           >
-            <Icon icon="radix-icons:dashboard" width="18" height="18" />
+            {isProjectsActive ? (
+              <Icon
+                icon="material-symbols:team-dashboard"
+                width="20"
+                height="20"
+              />
+            ) : (
+              <Icon
+                icon="material-symbols:team-dashboard-outline"
+                width="20"
+                height="20"
+              />
+            )}
+
             <span className="hidden md:flex">Projects</span>
           </Link>
         </div>
@@ -65,8 +87,8 @@ const SideNav = () => {
       <div className="flex flex-row space-x-2 px-4   py-4">
         {isSignedIn && (
           <div className="hidden items-center space-x-4 sm:flex font-medium text-sm">
-            <UserButton afterSignOutUrl="/"  />
-            <span className='hidden md:flex'>{user.fullName}</span>
+            <UserButton afterSignOutUrl="/" />
+            <span className="hidden md:flex">{user.fullName}</span>
           </div>
         )}
       </div>

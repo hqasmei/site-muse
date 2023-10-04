@@ -6,16 +6,16 @@ import { usePathname } from 'next/navigation';
 
 const useNavigation = () => {
   const pathname = usePathname();
-  const [isAllLinksActive, setIsAllLinks] = useState(false);
+  const [isBookmarksActive, setIsBookmarks] = useState(false);
   const [isProjectsActive, setIsProjectsActive] = useState(false);
 
   useEffect(() => {
-    setIsAllLinks(false);
+    setIsBookmarks(false);
     setIsProjectsActive(false);
 
     switch (pathname) {
       case '/dashboard':
-        setIsAllLinks(true);
+        setIsBookmarks(true);
         break;
       case '/projects':
         setIsProjectsActive(true);
@@ -27,7 +27,7 @@ const useNavigation = () => {
   }, [pathname]);
 
   return {
-    isAllLinksActive,
+    isBookmarksActive,
     isProjectsActive,
   };
 };

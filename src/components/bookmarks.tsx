@@ -2,16 +2,22 @@
 
 import React, { useState } from 'react';
 
+
+
 import { LinkCard } from '@/components/link/link-card';
 import { useCreateLinkModal } from '@/components/modals/create-link-modal';
 import { Button } from '@/components/ui/button';
 import { Link } from '@prisma/client';
 
-type AllLinksProps = {
+
+
+
+
+type BookmarksProps = {
   data: Link[];
 };
 
-export const AllLinks = ({ data }: AllLinksProps) => {
+export const Bookmarks = ({ data }: BookmarksProps) => {
   const { setShowCreateLinkModal, CreateLinkModal } = useCreateLinkModal();
 
   return (
@@ -19,7 +25,7 @@ export const AllLinks = ({ data }: AllLinksProps) => {
       <CreateLinkModal />
       <div className="mt-8 justify-between flex border-b border-gray-200 pb-5  flex-row  items-center  gap-0 px-4">
         <h1 className="mb-3 font-heading text-2xl font-semibold text-gray-900 lg:text-4xl">
-          My Links
+          My Bookmarks
         </h1>
 
         <Button size="sm" onClick={() => setShowCreateLinkModal(true)}>

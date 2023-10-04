@@ -12,6 +12,7 @@ import { useUpdateProjectModal } from '@/components/modals/update-project-modal'
 import Popover from '@/components/popover';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { PopoverTrigger } from '@radix-ui/react-popover';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Edit3 } from 'lucide-react';

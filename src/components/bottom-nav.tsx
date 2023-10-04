@@ -11,9 +11,12 @@ import { Icon } from '@iconify/react';
 
 const BottomNav = () => {
   const scrollDirection = useScrollingEffect(); // Use the custom hook
-  const navClass = scrollDirection === 'up' ? '' : 'opacity-25 duration-500';
+  const navClass =
+    scrollDirection === 'up' || window.scrollY === 0
+      ? ''
+      : 'opacity-25 duration-500';
 
-  const { isAllLinksActive, isProjectsActive } = useNavigation();
+  const { isBookmarksActive, isProjectsActive } = useNavigation();
 
   return (
     <div
@@ -23,28 +26,36 @@ const BottomNav = () => {
         <Link
           href="/dashboard"
           className={`flex flex-col space-y-1 justify-center items-center w-full py-2 ${
-            isAllLinksActive ? 'font-semibold bg-zinc-200' : ''
+            isBookmarksActive ? ' bg-zinc-200' : ''
           }`}
         >
-          <Icon icon="zondicons:link" width="20" height="20" />
-          <span
-            className={`text-xs ${isAllLinksActive ? 'font-semibold' : ''}`}
-          >
-            All Links
-          </span>
+          {isBookmarksActive ? (
+            <Icon icon="material-symbols:bookmark" width="20" height="20" />
+          ) : (
+            <Icon
+              icon="material-symbols:bookmark-outline"
+              width="20"
+              height="20"
+            />
+          )}
+          <span className="text-xs">Bookmarks</span>
         </Link>
         <Link
           href="/projects"
           className={`flex flex-col space-y-1 items-center justify-center w-full py-2 ${
-            isProjectsActive ? 'font-semibold bg-zinc-200' : ''
+            isProjectsActive ? ' bg-zinc-200' : ''
           }`}
         >
-          <Icon icon="radix-icons:dashboard" width="20" height="20" />
-          <span
-            className={`text-xs ${isAllLinksActive ? 'font-semibold' : ''}`}
-          >
-            Projects
-          </span>
+          {isProjectsActive ? (
+            <Icon
+              icon="material-symbols:team-dashboard"
+              width="20"
+              height="20"
+            />
+          ) : (
+            <Icon icon="material-symbols:team-dashboard-outline" />
+          )}
+          <span className="text-xs">Projects</span>
         </Link>
         <div className="flex items-center justify-center w-full">
           <UserButton />

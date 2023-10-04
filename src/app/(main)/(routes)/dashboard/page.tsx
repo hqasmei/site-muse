@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AllLinks } from '@/components/all-links';
+import { Bookmarks } from '@/components/bookmarks';
 import prismadb from '@/lib/prismadb';
 import { currentUser } from '@clerk/nextjs';
 
@@ -12,7 +12,7 @@ const DashboardPage = async () => {
     orderBy: { createdAt: 'desc' },
   });
 
-  return <AllLinks data={data} />;
+  return <Bookmarks data={data} />;
 };
 
 export default DashboardPage;
