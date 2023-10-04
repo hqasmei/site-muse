@@ -21,7 +21,7 @@ export const Bookmark = ({ link, projectId }: BookmarkProps) => {
   return (
     <div className="flex flex-col px-4 mt-10 space-y-6">
       <Link
-        href={`${projectId ? `/dashboard/${projectId}` : `/dashboard`}`}
+        href={`${projectId ? `/projects/${projectId}` : `/dashboard`}`}
         className="flex flex-row space-x-0.5 items-center group"
       >
         <ArrowLeft className="group-hover:-translate-x-0.5 duration-100" />
