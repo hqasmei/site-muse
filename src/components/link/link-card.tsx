@@ -70,7 +70,7 @@ export const LinkCard = ({
             </svg>
           </Link>
           {projectId ? (
-            <Link href={`/dashboard/${projectId}/${item.id}`}>
+            <Link href={`/projects/${projectId}/${item.id}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
