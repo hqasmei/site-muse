@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Projects } from '@/components/projects';
+import { Projects } from '@/components/projects/projects';
 import prismadb from '@/lib/prismadb';
 import { currentUser } from '@clerk/nextjs';
 
@@ -12,7 +12,7 @@ const ProjectsPage = async () => {
     orderBy: { createdAt: 'desc' },
   });
 
-  return <Projects data={data} />;
+  return <Projects input={data} />;
 };
 
 export default ProjectsPage;
