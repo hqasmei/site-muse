@@ -16,7 +16,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning={true}>
-      
         <body>
           <TanstackProvider>
             {children}
