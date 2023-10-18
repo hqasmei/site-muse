@@ -35,7 +35,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <TanstackProvider>
             {children}
             <Analytics />
-            <ReactQueryDevtools />
+            {/* <ReactQueryDevtools /> */}
           </TanstackProvider>
         </body>
       </html>

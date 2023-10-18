@@ -2,16 +2,10 @@
 
 import React, { useState } from 'react';
 
-
-
 import { LinkCard } from '@/components/link/link-card';
 import { useCreateLinkModal } from '@/components/modals/create-link-modal';
 import { Button } from '@/components/ui/button';
 import { Link } from '@prisma/client';
-
-
-
-
 
 type BookmarksProps = {
   data: Link[];
@@ -35,7 +29,7 @@ export const Bookmarks = ({ data }: BookmarksProps) => {
       {data.length === 0 ? (
         <div className="relative flex flex-col items-center gap-4 p-8 h-full flex-1 mt-8 px-4">
           <p className="mt-1 text-sm text-zinc-500">
-            Let&#39;s create your first Project.
+            Let&#39;s create your first Bookmark.
           </p>
           <div className="mt-8"></div>
         </div>

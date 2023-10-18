@@ -26,7 +26,7 @@ import {
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
 import { Project } from '@prisma/client';
-import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 import ProjectItem from './project-item';
 
@@ -51,24 +51,16 @@ export const Projects = ({ input }: ProjectsProps) => {
   );
 
   useEffect(() => {
-    // Update the containers state with the new data
+    // Update the containers state with the new data, ensuring they are ordered by position
     setContainers(
-      input.map((item) => ({
-        id: 'container-' + item.id,
-        item: item,
-      })),
+      input
+        .map((item) => ({
+          id: 'container-' + item.id,
+          item: item,
+        }))
+        .sort((a, b) => a.item.position - b.item.position), // Sort by position
     );
   }, [input]);
-
-  // const { data, isLoading, isError } = useQuery({
-  //   queryKey: ['getProjects', { id: "1234"}],
-  //   queryFn: async () => {
-  //     const { data } = await axios.post('/api/link/get', {
-  //       projectId: item.id,
-  //     });
-  //     return data;
-  //   },
-  // });
 
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
 
@@ -92,7 +84,7 @@ export const Projects = ({ input }: ProjectsProps) => {
     setActiveId(id);
   };
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
 
     // Handling Container Sorting
@@ -110,15 +102,29 @@ export const Projects = ({ input }: ProjectsProps) => {
       const overContainerIndex = containers.findIndex(
         (container) => container.id === over.id,
       );
-      // Swap the active and over container
-      let newItems = [...containers];
-      newItems = arrayMove(newItems, activeContainerIndex, overContainerIndex);
-      setContainers(newItems);
+
+      // Update the state to reflect the new order
+      const newContainers = arrayMove(
+        containers,
+        activeContainerIndex,
+        overContainerIndex,
+      );
+      setContainers(newContainers);
+
+      // Update the database positions based on the client-side order
+      const newPositionOrder = newContainers.map((container, index) => ({
+        projectId: container.item.id,
+        position: index,
+      }));
+
+      // Call an API endpoint to update the positions in the database
+      await axios.post('/api/project/update-position', {
+        newPositionOrder: newPositionOrder,
+      });
     }
 
     setActiveId(null);
   };
-
   return (
     <>
       <CreateProjectModal />
