@@ -1,5 +1,5 @@
 <a href="https://sitemuse.co">
-  <img alt="SiteMuse – an open-source tool for developers and designers to manage bookmarks and streamline research and inspiration.." src="images/site-muse.png">
+  <img alt="SiteMuse – an open-source tool for developers and designers to manage bookmarks and streamline research and inspiration.." src="github-images/site-muse.png">
   <h1 align="center">SiteMuse</h1>
 </a>
 
