@@ -40,37 +40,39 @@ export const Project = ({ project, links }: ProjectProps) => {
       const projectImages = await axios.post('/api/images', {
         projectId: project.id,
       });
-      const imageUrls = projectImages.data.flatMap((item: any) =>
-        [item.imageDesktopUrl, item.imageMobileUrl].filter((url) => url !== ''),
-      );
+      console.log('here');
+      console.log(projectImages);
+      // const imageUrls = projectImages.data.flatMap((item: any) =>
+      //   [item.imageDesktopUrl, item.imageMobileUrl].filter((url) => url !== ''),
+      // );
 
-      const zip = new JSZip();
+      // const zip = new JSZip();
 
-      for (let i = 0; i < imageUrls.length; i++) {
-        const imageUrl = imageUrls[i];
+      // for (let i = 0; i < imageUrls.length; i++) {
+      //   const imageUrl = imageUrls[i];
 
-        // Fetch the image data
-        const response = await axios.get(imageUrl, {
-          responseType: 'arraybuffer',
-        });
+      //   // Fetch the image data
+      //   const response = await axios.get(imageUrl, {
+      //     responseType: 'arraybuffer',
+      //   });
 
-        // Get the file name from the URL or use a generic name
-        const fileName =
-          imageUrl.substring(imageUrl.lastIndexOf('/') + 1) || `image_${i}.jpg`;
+      //   // Get the file name from the URL or use a generic name
+      //   const fileName =
+      //     imageUrl.substring(imageUrl.lastIndexOf('/') + 1) || `image_${i}.jpg`;
 
-        // Add the image to the zip
-        zip.file(fileName, response.data, { binary: true });
-      }
+      //   // Add the image to the zip
+      //   zip.file(fileName, response.data, { binary: true });
+      // }
 
-      // Generate the zip content
-      const content = await zip.generateAsync({ type: 'blob' });
+      // // Generate the zip content
+      // const content = await zip.generateAsync({ type: 'blob' });
 
-      console.log(projectImages.data);
-      console.log(imageUrls);
-      console.log(content);
+      // console.log(projectImages.data);
+      // console.log(imageUrls);
+      // console.log(content);
 
-      // Trigger the download using downloadjs
-      download(content, 'images.zip', 'application/zip');
+      // // Trigger the download using downloadjs
+      // download(content, 'images.zip', 'application/zip');
 
       setOpenPopover(false);
     } catch (error) {
