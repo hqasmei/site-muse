@@ -65,6 +65,10 @@ export const Project = ({ project, links }: ProjectProps) => {
       // Generate the zip content
       const content = await zip.generateAsync({ type: 'blob' });
 
+      console.log(projectImages.data);
+      console.log(imageUrls);
+      console.log(content);
+
       // Trigger the download using downloadjs
       download(content, 'images.zip', 'application/zip');
 
