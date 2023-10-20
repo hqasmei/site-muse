@@ -133,7 +133,7 @@ export const Bookmark = ({ link, projectId }: BookmarkProps) => {
   return (
     <>
       <DeleteLinkModal />
-      <div className="flex flex-col  mt-10 space-y-6 pb-8">
+      <div className="flex flex-col  mt-10 space-y-6 pb-24">
         <button
           onClick={() => router.back()}
           className="flex flex-row space-x-0.5 items-center group px-4"
