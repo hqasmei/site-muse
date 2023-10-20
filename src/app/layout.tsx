@@ -18,6 +18,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <html lang="en" suppressHydrationWarning={true}>
         <head>
           <link rel="icon" href="/favicon.ico" sizes="any" />
+          <meta
+            name="viewport"
+            content="width=device-width, user-scalable=no"
+          />
           <link
             rel="icon"
             href="/icon?<generated>"
