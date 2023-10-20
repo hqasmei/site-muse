@@ -17,7 +17,7 @@ export const Bookmarks = ({ data }: BookmarksProps) => {
   return (
     <>
       <CreateLinkModal />
-      <div className=" justify-between flex border-b border-gray-200  py-4 flex-row  items-end  px-4">
+      <div className=" justify-between flex border-b border-gray-200  py-4 md:py-8 flex-row  items-end  px-4">
         <span className="  text-2xl font-semibold text-gray-900 lg:text-4xl">
           My Bookmarks
         </span>

@@ -92,7 +92,7 @@ export const Bookmark = ({ link, projectId }: BookmarkProps) => {
 
               <button
                 onClick={() => handleDownload(link.imageDesktopUrl)}
-                className="absolute top-8 right-4 bg-zinc-300 hover:bg-zinc-400 duration-150 z-10 h-8 w-8 rounded p-1"
+                className="absolute top-4 right-4 bg-zinc-200 hover:bg-zinc-300 duration-150 z-10 h-8 w-8 rounded p-1"
               >
                 <Download />
               </button>
@@ -116,7 +116,7 @@ export const Bookmark = ({ link, projectId }: BookmarkProps) => {
               />
               <button
                 onClick={() => handleDownload(link.imageMobileUrl)}
-                className="absolute top-8 right-4 bg-zinc-300 hover:bg-zinc-400 duration-150 z-10 h-8 w-8 rounded p-1"
+                className="absolute top-4 right-4 bg-zinc-200 hover:bg-zinc-300 duration-150 z-10 h-8 w-8 rounded p-1"
               >
                 <Download />
               </button>
@@ -143,11 +143,11 @@ export const Bookmark = ({ link, projectId }: BookmarkProps) => {
         </button>
 
         <div className="mt-8   flex border-b border-gray-200    flex-col    gap-0 ">
-          <div className="flex flex-row justify-between items-end   w-full px-8 pb-6">
+          <div className="flex flex-row justify-between items-end   w-full px-4 md:px-8 pb-4 md:pb-6">
             <Link
               href={link.linkUrl}
               target="_blank"
-              className="font-heading text-2xl font-semibold text-gray-900 lg:text-4xl underline underline-offset-4 hover:decoration-blue-700 hover:text-blue-700 duration-200"
+              className="font-heading text-2xl font-semibold text-black/60 lg:text-4xl underline underline-offset-4 hover:decoration-black/90 hover:text-black/90 duration-200 text-ellipsis overflow-hidden max-w-[275px] md:max-w-full whitespace-nowrap"
             >
               {link.linkUrl}
             </Link>
@@ -202,7 +202,7 @@ export const Bookmark = ({ link, projectId }: BookmarkProps) => {
               </button>
             </Popover>
           </div>
-          <div className="w-full items-start flex px-4">
+          <div className="w-full items-start flex md:px-4">
             <Framer.Tabs {...framer.tabProps} />
           </div>
         </div>

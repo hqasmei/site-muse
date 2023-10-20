@@ -41,7 +41,7 @@ const Tabs = ({
   return (
     <nav
       ref={navRef}
-      className="flex flex-shrink-0 justify-center items-center relative z-0 py-2"
+      className="flex flex-shrink-0 justify-center items-center relative z-0 py-1"
       onPointerLeave={(e) => setHoveredTabIndex(null)}
     >
       {tabs.map((item, i) => {
@@ -73,41 +73,10 @@ const Tabs = ({
         );
       })}
 
-      <AnimatePresence>
-        {hoveredRect && navRect && (
-          <motion.div
-            key={'hover'}
-            className="absolute p-1 mb-1 z-10 top-0 left-0 rounded-md bg-zinc-200 dark:bg-zinc-800 "
-            initial={{
-              x: hoveredRect.left - navRect.left,
-              y: hoveredRect.top - navRect.top,
-              width: hoveredRect.width,
-              height: hoveredRect.height,
-              opacity: 0,
-            }}
-            animate={{
-              x: hoveredRect.left - navRect.left,
-              y: hoveredRect.top - navRect.top,
-              width: hoveredRect.width,
-              height: hoveredRect.height,
-              opacity: 1,
-            }}
-            exit={{
-              x: hoveredRect.left - navRect.left,
-              y: hoveredRect.top - navRect.top,
-              width: hoveredRect.width,
-              height: hoveredRect.height,
-              opacity: 0,
-            }}
-            transition={transition}
-          />
-        )}
-      </AnimatePresence>
-
       {selectedRect && navRect && (
         <motion.div
           className={
-            'absolute z-10 bottom-0 left-0.5 h-[3px] bg-zinc-700 dark:bg-zinc-200'
+            'absolute z-10 bottom-0 left-0.5 h-[3px] bg-zinc-700 dark:bg-zinc-200 rounded-full'
           }
           initial={false}
           animate={{

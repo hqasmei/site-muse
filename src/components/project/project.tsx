@@ -105,9 +105,9 @@ export const Project = ({ project, links }: ProjectProps) => {
         <span>Back</span>
       </Link>
 
-      <div className="mt-8 justify-between flex border-b border-gray-200 pb-5  flex-row  items-center  gap-0 px-4">
+      <div className="mt-8 justify-between flex border-b border-gray-200 pb-5  flex-row  items-end  gap-0 px-4">
         <div className="flex flex-row space-x-2 items-center  ">
-          <h1 className="mb-3 font-heading text-2xl font-semibold text-gray-900 lg:text-4xl">
+          <h1 className="font-heading text-2xl font-semibold text-gray-900 lg:text-4xl">
             {project?.name}
           </h1>
         </div>
