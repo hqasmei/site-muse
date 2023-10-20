@@ -116,6 +116,7 @@ function CreateLinkModalHelper({
                       disabled={isLoading}
                       placeholder="http://"
                       {...field}
+                      className='touch-none'
                     />
                   </FormControl>
                 </FormItem>
