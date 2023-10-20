@@ -17,10 +17,10 @@ export const Bookmarks = ({ data }: BookmarksProps) => {
   return (
     <>
       <CreateLinkModal />
-      <div className="mt-8 justify-between flex border-b border-gray-200 pb-5  flex-row  items-center  gap-0 px-4 ">
-        <h1 className="mb-3 font-heading text-2xl font-semibold text-gray-900 lg:text-4xl">
+      <div className=" justify-between flex border-b border-gray-200  py-4 flex-row  items-end  px-4 ">
+        <span className="  text-2xl font-semibold text-gray-900 lg:text-4xl">
           My Bookmarks
-        </h1>
+        </span>
 
         <Button size="sm" onClick={() => setShowCreateLinkModal(true)}>
           Add Link
