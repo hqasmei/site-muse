@@ -49,6 +49,7 @@ function DeleteLinkModalHelper({
       await axios.post('/api/link/delete', values);
       router.refresh();
       setShowDeleteLinkModal(false);
+      router.back();
     } catch (error) {
       console.log(error);
     }

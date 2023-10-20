@@ -21,7 +21,6 @@ import {
   FormLabel,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { CreateLinkModalProps } from '@/lib/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
@@ -73,35 +72,14 @@ function CreateLinkModalHelper({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      var desktopScreenshotUrl = '';
-      var mobileScreenshotUrl = '';
-
-      switch (values.type) {
-        case 'both':
-          desktopScreenshotUrl = await getScreenshotUrl(
-            values.linkUrl,
-            'desktop',
-          );
-          mobileScreenshotUrl = await getScreenshotUrl(
-            values.linkUrl,
-            'mobile',
-          );
-          break;
-        case 'desktop':
-          desktopScreenshotUrl = await getScreenshotUrl(
-            values.linkUrl,
-            'desktop',
-          );
-          break;
-        case 'mobile':
-          mobileScreenshotUrl = await getScreenshotUrl(
-            values.linkUrl,
-            'mobile',
-          );
-          break;
-        default:
-          break;
-      }
+      const desktopScreenshotUrl = await getScreenshotUrl(
+        values.linkUrl,
+        'desktop',
+      );
+      const mobileScreenshotUrl = await getScreenshotUrl(
+        values.linkUrl,
+        'mobile',
+      );
 
       await axios.post('/api/link/create', {
         linkUrl: values.linkUrl,
@@ -139,42 +117,6 @@ function CreateLinkModalHelper({
                       placeholder="http://"
                       {...field}
                     />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              name="type"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem className="col-span-2 md:col-span-1">
-                  <FormLabel>Select Screen</FormLabel>
-                  <FormControl>
-                    <RadioGroup
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      className="flex flex-row space-x-1"
-                    >
-                      <FormItem className="flex items-center space-x-3 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="both" />
-                        </FormControl>
-                        <FormLabel className="font-normal">Both</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="desktop" />
-                        </FormControl>
-                        <FormLabel className="font-normal">Desktop</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="mobile" />
-                        </FormControl>
-                        <FormLabel className="font-normal">Mobile</FormLabel>
-                      </FormItem>
-                    </RadioGroup>
                   </FormControl>
                 </FormItem>
               )}

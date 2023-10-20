@@ -37,7 +37,7 @@ export const Project = ({ project, links }: ProjectProps) => {
 
   const handleDownload = async () => {
     try {
-      const projectImages = await axios.post('/api/images', {
+      const projectImages = await axios.post('/api/images/projectId', {
         projectId: project.id,
       });
       const imageUrls = projectImages.data.flatMap((item: any) =>
@@ -193,7 +193,7 @@ export const Project = ({ project, links }: ProjectProps) => {
           <div className="mt-8"></div>
         </div>
       ) : (
-        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 px-4  gap-8 pb-10 mt-8">
+        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-8 pb-24  px-4">
           {links.map((link: any) => {
             const options = {
               year: 'numeric',

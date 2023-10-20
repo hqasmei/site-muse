@@ -14,9 +14,9 @@ const SideNav = () => {
   const { isSignedIn, user, isLoaded } = useUser();
 
   return (
-    <div className="flex-col space-y-4 items-center hidden sm:flex border-r border-zinc-200 h-full  w-[65px] md:w-[220px] md:items-start fixed bg-zinc-100">
+    <div className="flex-col space-y-4 items-center hidden sm:flex border-r border-zinc-200 h-full  w-[65px] md:w-[220px] md:items-start fixed bg-white">
       <div className="w-full flex-1 pt-6">
-        <div className="border-b pb-4">
+        <div className=" ">
           <Link
             href="/bookmarks"
             className="font-bold flex flex-row items-center px-4"
@@ -40,46 +40,66 @@ const SideNav = () => {
           </Link>
         </div>
 
-        <div className="flex flex-col  space-y-2 px-3  md:space-y-1 md:px-2 pt-4 items-center md:items-start">
+        <div className="flex flex-col  space-y-2 px-3  md:space-y-1 pt-4 items-center md:items-start">
           <Link
             href="/bookmarks"
-            className={`flex flex-row space-x-2 justify-center items-center md:justify-start relative px-2 rounded py-2 hover:bg-zinc-200  w-full ${
-              isBookmarksActive ? 'bg-zinc-200' : ''
+            className={`flex flex-row space-x-2 justify-center items-center md:justify-start relative px-2 rounded py-2 hover:bg-zinc-100 group  w-full ${
+              isBookmarksActive ? 'bg-zinc-100' : ''
             }`}
           >
             {isBookmarksActive ? (
-              <Icon icon="material-symbols:bookmark" width="20" height="20" />
+              <Icon
+                icon="material-symbols:bookmark-outline"
+                width="20"
+                height="20"
+                className="text-blue-700"
+              />
             ) : (
               <Icon
                 icon="material-symbols:bookmark-outline"
                 width="20"
                 height="20"
+                className="  group-hover:text-blue-700"
               />
             )}
 
-            <span className="hidden md:flex">Bookmarks</span>
+            <span
+              className={`hidden text-sm md:flex font-semibold group-hover:text-blue-700 ${
+                isBookmarksActive ? 'text-blue-700' : ''
+              }`}
+            >
+              Bookmarks
+            </span>
           </Link>
           <Link
             href="/projects"
-            className={`flex flex-row space-x-2 items-center justify-center md:justify-start  relative px-2 rounded py-2 hover:bg-zinc-200  w-full ${
-              isProjectsActive ? 'bg-zinc-200' : ''
+            className={`flex flex-row space-x-2 items-center justify-center md:justify-start  relative px-2 rounded py-2 hover:bg-zinc-100 group  w-full ${
+              isProjectsActive ? 'bg-zinc-100' : ''
             }`}
           >
             {isProjectsActive ? (
               <Icon
-                icon="material-symbols:team-dashboard"
+                icon="material-symbols:team-dashboard-outline"
                 width="20"
                 height="20"
+                className="text-blue-700  "
               />
             ) : (
               <Icon
                 icon="material-symbols:team-dashboard-outline"
                 width="20"
                 height="20"
+                className="  group-hover:text-blue-700"
               />
             )}
 
-            <span className="hidden md:flex">Projects</span>
+            <span
+              className={`hidden md:flex text-sm font-semibold group-hover:text-blue-700 ${
+                isProjectsActive ? 'text-blue-700' : ''
+              }`}
+            >
+              Projects
+            </span>
           </Link>
         </div>
       </div>

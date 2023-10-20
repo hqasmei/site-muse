@@ -13,17 +13,22 @@ const BottomNav = () => {
 
   return (
     <div
-      className={`fixed bottom-0 w-full  z-10 bg-zinc-100 dark:bg-zinc-950 border-t dark:border-zinc-800 border-zinc-200 shadow-lg sm:hidden `}
+      className={`fixed bottom-0 w-full  z-10 bg-white dark:bg-zinc-950 border-t dark:border-zinc-800 border-zinc-200   sm:hidden `}
     >
-      <div className="flex flex-row items-center justify-start bg-transparent w-full">
+      <div className="flex flex-row   bg-transparent w-full">
         <Link
           href="/bookmarks"
-          className={`flex flex-col space-y-1 justify-center items-center w-full py-2 ${
-            isBookmarksActive ? ' bg-zinc-200' : ''
+          className={`flex flex-col space-y-1 justify-center items-center  w-full  py-2 ${
+            isBookmarksActive ? ' bg-zinc-100' : ''
           }`}
         >
           {isBookmarksActive ? (
-            <Icon icon="material-symbols:bookmark" width="20" height="20" />
+            <Icon
+              icon="material-symbols:bookmark-outline"
+              width="20"
+              height="20"
+              className="text-blue-700"
+            />
           ) : (
             <Icon
               icon="material-symbols:bookmark-outline"
@@ -31,19 +36,26 @@ const BottomNav = () => {
               height="20"
             />
           )}
-          <span className="text-xs">Bookmarks</span>
+          <span
+            className={`text-xs font-semibold ${
+              isBookmarksActive ? ' text-blue-700' : ''
+            }`}
+          >
+            Bookmarks
+          </span>
         </Link>
         <Link
           href="/projects"
-          className={`flex flex-col space-y-1 items-center justify-center w-full py-2 ${
-            isProjectsActive ? ' bg-zinc-200' : ''
+          className={`flex flex-col space-y-1 items-center justify-center  w-full  py-2 ${
+            isProjectsActive ? ' bg-zinc-100' : ''
           }`}
         >
           {isProjectsActive ? (
             <Icon
-              icon="material-symbols:team-dashboard"
+              icon="material-symbols:team-dashboard-outline"
               width="20"
               height="20"
+              className="text-blue-700"
             />
           ) : (
             <Icon
@@ -52,7 +64,13 @@ const BottomNav = () => {
               height="20"
             />
           )}
-          <span className="text-xs">Projects</span>
+          <span
+            className={`text-xs font-semibold ${
+              isProjectsActive ? ' text-blue-700' : ''
+            }`}
+          >
+            Projects
+          </span>
         </Link>
         <div className="flex items-center justify-center w-full">
           <UserButton />
