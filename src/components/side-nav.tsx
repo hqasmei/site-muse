@@ -10,7 +10,8 @@ import { useAuth, UserButton, useUser } from '@clerk/nextjs';
 import { Icon } from '@iconify/react';
 
 const SideNav = () => {
-  const { isBookmarksActive, isProjectsActive } = useNavigation();
+  const { isBookmarksActive, isProjectsActive, isDiscoverActive } =
+    useNavigation();
   const { isSignedIn, user, isLoaded } = useUser();
 
   return (
@@ -99,6 +100,36 @@ const SideNav = () => {
               }`}
             >
               Projects
+            </span>
+          </Link>
+          <Link
+            href="/discover"
+            className={`flex flex-row space-x-2 items-center justify-center md:justify-start  relative px-2 rounded py-2 hover:bg-zinc-100 group  w-full ${
+              isDiscoverActive ? 'bg-zinc-100' : ''
+            }`}
+          >
+            {isDiscoverActive ? (
+              <Icon
+                icon="lucide:sparkles"
+                width="20"
+                height="20"
+                className="text-blue-700  "
+              />
+            ) : (
+              <Icon
+                icon="lucide:sparkles"
+                width="20"
+                height="20"
+                className="  group-hover:text-blue-700"
+              />
+            )}
+
+            <span
+              className={`hidden md:flex text-sm font-semibold group-hover:text-blue-700 ${
+                isDiscoverActive ? 'text-blue-700' : ''
+              }`}
+            >
+              Discover
             </span>
           </Link>
         </div>
